@@ -26,11 +26,8 @@
   .btn.ghost{background:#fff;color:var(--ink);border-color:var(--bd);} .btn.ghost:hover{border-color:#c9cbe0;}
   .btn.lg{font-size:16px;padding:15px 30px;}
   h1{font-size:58px;line-height:1.05;font-weight:900;color:var(--ink);letter-spacing:-1.8px;}
-  h3{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.3px;}
   .lead{font-size:20px;color:var(--muted);}
   section{padding:88px 0;}
-  .soft{background:var(--soft);}
-  .center{text-align:center;max-width:820px;margin:0 auto;}
 
   nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 6%;background:var(--navbg);position:sticky;top:0;z-index:1000;}
   .nav-left{display:flex;align-items:center;gap:2.6rem;}
@@ -51,16 +48,6 @@
   .herobtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px;}
   .microline{font-size:14px;color:var(--muted);margin-top:18px;}
 
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:46px;}
-  .step{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:30px;}
-  .step .num{width:44px;height:44px;border-radius:10px;background:var(--blue);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
-  .step p{color:var(--txt);margin-top:8px;font-size:15.5px;}
-
-  .helpbar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px;}
-  .chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--bd);border-radius:999px;padding:10px 18px;font-size:14.5px;font-weight:600;color:var(--ink);transition:.15s;}
-  .chip:hover{border-color:#c9cbe0;transform:translateY(-1px);}
-  .chip .d{width:8px;height:8px;border-radius:50%;flex:none;}
-
   footer{background:#0a0e1c;color:#8b99b4;padding:56px 0 34px;}
   footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;}
   footer a{color:#8b99b4;font-size:14px;} footer a:hover{color:#fff;}
@@ -71,7 +58,7 @@
 
   @media(max-width:920px){
    h1{font-size:38px;letter-spacing:-1px;}
-   .steps{grid-template-columns:1fr;} .navlinks{display:none;} section{padding:56px 0;}
+   .navlinks{display:none;} section{padding:56px 0;}
   }
 </style>
 </head>
@@ -105,36 +92,6 @@
     <a class="btn ghost lg" href="index.html#how">See how it works</a>
   </div>
   <div class="microline">Didn't get the invite? Check spam, or email <a href="mailto:cs@flowrms.com" style="color:var(--blue);font-weight:600">cs@flowrms.com</a></div>
-</div></section>
-
-<!-- WHAT HAPPENS NEXT -->
-<section class="soft"><div class="wrap">
-  <div class="center">
-    <h2 style="font-size:42px;line-height:1.1;font-weight:900;letter-spacing:-1.2px">What happens next</h2>
-    <p class="lead" style="margin-top:14px">About 20 minutes, no prep required. Here's the shape of it.</p>
-  </div>
-  <div class="steps">
-    <div class="step">
-      <div class="num">1</div>
-      <h3>We learn your channel</h3>
-      <p>Who you send data to today, what formats you already have it in, and where things break down. Bring a sample file if you have one handy — you don't need to.</p>
-    </div>
-    <div class="step">
-      <div class="num" style="background:var(--distc)">2</div>
-      <h3>We show you FlowConnect</h3>
-      <p>A live walkthrough using data that looks like yours — product data, pricing, quotes, orders, invoices, commissions and POS moving to real partners.</p>
-    </div>
-    <div class="step">
-      <div class="num" style="background:var(--repc)">3</div>
-      <h3>You get a straight answer</h3>
-      <p>What it would take to connect your partners, what it costs, and how fast you'd be live. No obligation, and no pressure to decide on the call.</p>
-    </div>
-  </div>
-  <div class="helpbar">
-    <a class="chip" href="index.html#edi"><span class="d" style="background:var(--blue)"></span>EDI &amp; Data Service</a>
-    <a class="chip" href="index.html#usecases"><span class="d" style="background:var(--distc)"></span>Use cases</a>
-    <a class="chip" href="https://www.flowrms.com" target="_blank" rel="noopener"><span class="d" style="background:var(--repc)"></span>The Flow platform</a>
-  </div>
 </div></section>
 
 <footer><div class="wrap">
