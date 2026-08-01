@@ -51,6 +51,13 @@
   .herobtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px;}
   .microline{font-size:14px;color:var(--muted);margin-top:18px;}
 
+  .community{display:flex;align-items:center;justify-content:space-between;gap:24px;text-align:left;flex-wrap:wrap;
+    max-width:720px;margin:52px auto 0;padding:22px 26px;background:var(--soft);border:1px solid var(--bd);border-radius:14px;}
+  .community .ctext{flex:1 1 340px;}
+  .community .ctext b{display:block;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.2px;}
+  .community .ctext p{font-size:14.5px;color:var(--muted);margin-top:4px;}
+  .community .btn{flex:none;}
+
   footer{background:#0a0e1c;color:#8b99b4;padding:56px 0 34px;}
   footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;}
   footer a{color:#8b99b4;font-size:14px;} footer a:hover{color:#fff;}
@@ -62,6 +69,7 @@
   @media(max-width:920px){
    h1{font-size:38px;letter-spacing:-1px;}
    .navlinks{display:none;} section{padding:56px 0;}
+   .community{flex-direction:column;align-items:flex-start;text-align:left;}
   }
 </style>
 </head>
@@ -95,6 +103,14 @@
     <a class="btn ghost lg" href="index.html#how">See how it works</a>
   </div>
   <div class="microline">Didn't get the invite? Check spam, or email <a href="mailto:cs@flowrms.com" style="color:var(--blue);font-weight:600">cs@flowrms.com</a></div>
+
+  <div class="community">
+    <div class="ctext">
+      <b>While you wait — join the FlowMakers community</b>
+      <p>Where people building the modern industrial supply chain trade notes on data, systems and the channel.</p>
+    </div>
+    <a class="btn ghost" href="https://flowmakers.org" target="_blank" rel="noopener">Visit FlowMakers →</a>
+  </div>
 </div></section>
 
 <footer><div class="wrap">
