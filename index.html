@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior:smooth;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowConnect — Syndicate your channel data, effortlessly</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navbg:#0a0e1c;--ink:#0f172a;--txt:#4b5563;--muted:#6b7280;--soft:#f8fafc;--bd:#e5e7eb;--card:#fff;
+    --blue:#2563eb;--orange:#f97316;--green:#10b981;
+    --mfrc:#2563eb;--distc:#10b981;--repc:#f97316;--accent:#ea580c;
+    --g:linear-gradient(120deg,#2563eb 0%,#3b82f6 30%,#f97316 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{overflow-x:hidden;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 6%;}
+  .grad{color:var(--orange);}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:13px 24px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:.15s;color:#fff;}
+  .btn.primary{background:var(--blue);box-shadow:0 8px 22px rgba(37,99,235,.28);} .btn.primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(37,99,235,.38);}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--bd);} .btn.ghost:hover{border-color:#c9cbe0;}
+  .btn.blue{background:var(--mfrc);box-shadow:0 8px 22px rgba(37,99,235,.26);} .btn.green{background:var(--distc);box-shadow:0 8px 22px rgba(16,185,129,.26);} .btn.purple{background:var(--repc);box-shadow:0 8px 22px rgba(249,115,22,.28);}
+  .btn.blue:hover,.btn.green:hover,.btn.purple:hover{transform:translateY(-1px);}
+  .btn.lg{font-size:16px;padding:15px 30px;}
+  h1{font-size:58px;line-height:1.05;font-weight:900;color:var(--ink);letter-spacing:-1.8px;}
+  h2{font-size:42px;line-height:1.1;font-weight:900;color:var(--ink);letter-spacing:-1.2px;}
+  h3{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.3px;}
+  .lead{font-size:20px;color:var(--muted);}
+  section{padding:88px 0;}
+  .soft{background:var(--soft);}
+  .center{text-align:center;max-width:820px;margin:0 auto;}
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 6%;background:var(--navbg);position:sticky;top:0;z-index:1000;}
+  .nav-left{display:flex;align-items:center;gap:2.6rem;}
+  .nav-logo{display:flex;align-items:center;gap:.5rem;font-size:1.32rem;color:#fff;}
+  .nav-logo img{height:36px;width:auto;mix-blend-mode:screen;}
+  .nav-logo b{font-weight:900;} .nav-logo .lt{font-weight:400;}
+  .navlinks{display:flex;gap:1.6rem;}
+  .navlinks a{font-size:14.5px;font-weight:600;color:#cbd5e1;} .navlinks a:hover{color:#fff;}
+  .navcta{display:flex;align-items:center;gap:1.1rem;}
+  .navcta a.login{font-size:14.5px;font-weight:700;color:#fff;}
+
+  .hero{padding:74px 0 60px;position:relative;overflow:hidden;text-align:center;}
+  .hero::before{content:"";position:absolute;top:-320px;right:-160px;width:820px;height:820px;background:radial-gradient(circle,rgba(236,72,153,.12),transparent 60%);z-index:-1;}
+  .hero::after{content:"";position:absolute;top:-260px;left:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,.13),transparent 62%);z-index:-1;}
+  .hero h1{max-width:1050px;margin:0 auto;}
+  .hero p.lead{margin:22px auto 30px;max-width:760px;}
+  .herobtns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .microline{margin-top:20px;font-size:14px;color:var(--muted);}
+
+  .shot{position:relative;}
+  .shot img{width:100%;border-radius:14px;border:1px solid var(--bd);box-shadow:0 36px 80px rgba(15,23,42,.22);}
+  .cf{position:absolute;background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 16px 38px rgba(15,23,42,.16);padding:11px 15px;font-size:13.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:10px;text-align:left;}
+  .cf .d{width:10px;height:10px;border-radius:50%;flex:none;}
+  .cf small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;}
+  .cf.tl{top:-18px;left:-20px;} .cf.br{bottom:-20px;right:-18px;}
+
+  .logolabel{text-align:center;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:26px;}
+  .logos{display:flex;align-items:center;justify-content:center;gap:44px;flex-wrap:wrap;}
+  .logos img{height:30px;filter:grayscale(1);opacity:.62;}
+
+  .frow{display:grid;grid-template-columns:1fr 1.08fr;gap:64px;align-items:center;}
+  .frow.rev .fvis{order:-1;}
+  .frow h2{font-size:34px;}
+  .frow p{margin-top:16px;font-size:17px;color:var(--muted);}
+  .flist{list-style:none;margin-top:20px;} .flist li{display:flex;gap:12px;align-items:flex-start;padding:8px 0;font-size:16px;color:var(--ink);}
+  .chk{color:var(--green);flex:none;margin-top:2px;font-weight:900;}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px;}
+  .step{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:30px;}
+  .step .num{width:44px;height:44px;border-radius:10px;background:var(--blue);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .step h3{margin-bottom:8px;} .step p{font-size:15px;color:var(--muted);}
+  .bigline{margin-top:44px;text-align:center;font-size:26px;font-weight:900;color:var(--ink);letter-spacing:-.6px;max-width:900px;margin-left:auto;margin-right:auto;}
+
+  .picker{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px;}
+  .pk{border:1px solid var(--bd);border-radius:16px;padding:30px;background:#fff;text-align:center;transition:.15s;display:block;}
+  .pk:hover{box-shadow:0 20px 46px rgba(15,23,42,.10);transform:translateY(-3px);border-color:#d6d8ea;}
+  .pk .pi{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto 16px;}
+  .pk h3{margin-bottom:6px;} .pk p{color:var(--muted);font-size:14.5px;} .pk .go{margin-top:14px;font-weight:800;font-size:15px;}
+
+  .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:46px;}
+  .vcard{border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;transition:.18s;display:flex;flex-direction:column;}
+  .vcard:hover{box-shadow:0 26px 56px rgba(15,23,42,.14);transform:translateY(-5px);border-color:#d6d8ea;}
+  .vcard .vimg{padding:24px 24px 0;background:linear-gradient(180deg,#eef2f9,#f8fafc);border-bottom:1px solid var(--bd);}
+  .vcard .vimg svg{width:100%;display:block;background:#fff;border:1px solid #e2e8f0;border-radius:14px 14px 0 0;box-shadow:0 20px 40px rgba(15,23,42,.14);}
+  .vcard .vb{padding:24px 26px 28px;}
+  .vcard h3{font-size:20px;margin-bottom:8px;} .vcard p{font-size:14.5px;color:var(--muted);}
+
+  .persona{padding:84px 0;border-top:1px solid var(--bd);}
+  .plabel{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:6px 14px;border-radius:50px;color:#fff;}
+
+  .edi{background:linear-gradient(135deg,#0b1121 0%,#13233f 55%,#5a2a12 100%);border-radius:20px;padding:58px;color:#fff;}
+  .edi h2{color:#fff;font-size:36px;max-width:680px;}
+  .edi p{color:rgba(255,255,255,.82);font-size:18px;margin-top:16px;max-width:640px;}
+  .ediflow{display:flex;align-items:center;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .edibox{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 20px;font-weight:700;font-size:15px;}
+  .ediconn{color:var(--orange);font-weight:900;font-size:20px;}
+
+  .blist{list-style:none;max-width:900px;margin:34px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px 46px;}
+  .blist li{display:flex;gap:12px;align-items:flex-start;font-size:16.5px;color:var(--ink);}
+
+  .statband{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .stat{text-align:center;} .stat .n{font-size:30px;font-weight:900;letter-spacing:-.5px;} .stat .l{font-size:14px;color:var(--muted);margin-top:4px;}
+
+  .ctabig{background:var(--g);border-radius:20px;padding:62px;text-align:center;color:#fff;}
+  .ctabig h2{color:#fff;font-size:38px;} .ctabig p{color:rgba(255,255,255,.92);font-size:19px;margin:16px auto 30px;max-width:640px;}
+  .ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .ctabtns .btn{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.4);}
+  .ctabtns .btn.solid{background:#fff;color:#5b21b6;border:none;}
+
+  footer{background:#0a0e1c;color:#8b99b4;padding:56px 0 34px;}
+  footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+  footer a{color:#8b99b4;font-size:14px;} footer a:hover{color:#fff;}
+  footer .col b{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:12px;}
+  footer .col a{display:block;padding:4px 0;}
+  footer .nav-logo{color:#fff;} footer .nav-logo img{height:30px;}
+  .fbot{border-top:1px solid #1e293b;margin-top:34px;padding-top:20px;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  .modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px;}
+  .modal.open{display:flex;}
+  .modal .box{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:30px;}
+  .modal .box.giant{max-width:960px;width:100%;padding:0;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;}
+  .modal .mhead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 28px;border-bottom:1px solid var(--bd);flex:none;}
+  .modal .mclose{background:none;border:none;font-size:30px;line-height:.7;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:8px;}
+  .modal .mclose:hover{color:var(--ink);background:var(--soft);}
+  .modal .mbody{padding:8px 22px 22px;overflow:auto;flex:1;}
+  .modal .mbody .tidycal-embed{min-height:560px;}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;opacity:0;transition:.2s;pointer-events:none;z-index:3000;} .toast.on{opacity:1;}
+
+  @media(max-width:920px){
+   h1{font-size:38px;letter-spacing:-1px;} h2{font-size:30px;}
+   .frow,.steps,.picker,.statband,.vgrid{grid-template-columns:1fr;}
+   .frow.rev .fvis{order:0;} .navlinks{display:none;} section,.persona{padding:56px 0;}
+   .edi,.ctabig{padding:38px 24px;} .cf{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="#" class="nav-logo"><img src="fc-shots/orange-logo.png" alt="FlowConnect"><span><b>Flow</b><span class="lt">Connect</span></span></a>
+    <div class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#mfr">Manufacturers</a>
+      <a href="#dist">Distributors</a>
+      <a href="#rep">Reps</a>
+      <a href="#edi">EDI &amp; Data Service</a>
+      <a href="#usecases">Use cases</a>
+    </div>
+  </div>
+  <div class="navcta"><a class="btn primary" onclick="openDemo()">Get a Demo</a></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero"><div class="wrap">
+  <h1>Send your data in <span class="grad">any format.</span> We deliver it to every one of your manufacturer, rep, and distributor partners.</h1>
+  <p class="lead">FlowConnect is the effortless way to syndicate product data, pricing, quotes, orders, invoices, commissions and POS across the industrial supply chain — to the exact rep, distributor and manufacturer partners you choose. You send it however you already have it. We do everything else.</p>
+  <div class="herobtns"><a class="btn primary lg" onclick="openDemo()">Get a Demo →</a><a class="btn ghost lg" href="#how">See how it works</a></div>
+  <div class="microline">Any format accepted · Simple to connect · Pull your data out however you like</div>
+  <div class="shot" style="max-width:1040px;margin:48px auto 0">
+    <img src="fc-shots/network-home.png" alt="FlowConnect network home">
+    <div class="cf tl"><span class="d" style="background:var(--blue)"></span>Any format in<br><small>XLSX · CSV · PDF · EDI · email</small></div>
+    <div class="cf br"><span class="d" style="background:var(--orange)"></span>Auto-transformed<br><small>Delivered to your partners</small></div>
+  </div>
+</div></section>
+
+<!-- LOGOS -->
+<section style="padding:22px 0 46px"><div class="wrap">
+  <div class="logolabel">Trusted Across the Channel</div>
+  <div class="logos">
+    <img src="logos/nts.jpg" alt="NTS">
+    <img src="logos/psa.jpg" alt="Power Sales Associates">
+    <img src="logos/energy-reps.jpg" alt="Energy Reps">
+    <img src="logos/engineer-sales.jpg" alt="Engineer Sales">
+    <img src="logos/partner1.png" alt="Powerlink">
+    <img src="logos/partner2.png" alt="Adanac">
+  </div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section class="soft" id="how"><div class="wrap">
+  <div class="center">
+    <h2>Working with us takes exactly one step: send us your data.</h2>
+    <p class="lead" style="margin-top:16px">No reformatting. No data-prep project. No splitting one clean file into six for a legacy exchange. You send it in whatever shape you already have — and we take it from there.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>You send it</h3><p>Upload a file, send an email, POST to an API, drop it in an EDI mailbox — or let us integrate into your system and pull it for you. In literally any format. You change nothing.</p></div>
+    <div class="step"><div class="num">2</div><h3>We transform it</h3><p>Our proprietary AI and analytics engine normalize, clean and map your data on our side. No manual mapping, no vendor-specific templates, no work for you.</p></div>
+    <div class="step"><div class="num">3</div><h3>Your partners get it</h3><p>Delivered to the exact partners you designate. They pull it however they want — download, API, EDI — or run it live in the Flow platform.</p></div>
+  </div>
+  <div style="margin-top:52px"><div style="max-width:1000px;margin:0 auto;background:#fff;border:1px solid var(--bd);border-radius:16px;box-shadow:0 36px 80px rgba(15,23,42,.14);padding:24px 18px;">
+    <svg viewBox="0 0 1000 440" style="width:100%;height:auto;font-family:'Inter',sans-serif" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#f97316"/>
+        </linearGradient>
+      </defs>
+
+      <!-- section labels -->
+      <text x="132" y="86" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="1" fill="#94a3b8">YOU — ANY METHOD</text>
+      <text x="810" y="34" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="1" fill="#94a3b8">TRUSTED PARTNERS</text>
+
+      <!-- connectors: inputs -> hub -->
+      <g fill="none" stroke-width="2" stroke-linecap="round">
+        <path id="l1" d="M212 120 C 360 120, 360 220, 444 220" stroke="#93c5fd"/>
+        <path id="l2" d="M212 180 C 360 180, 360 220, 444 220" stroke="#93c5fd"/>
+        <path id="l3" d="M212 240 C 360 240, 360 220, 444 220" stroke="#93c5fd"/>
+        <path id="l4" d="M212 300 C 360 300, 360 220, 444 220" stroke="#93c5fd"/>
+        <!-- connectors: hub -> partners -->
+        <path id="r1" d="M556 220 C 650 220, 620 60, 684 60"   stroke="#93c5fd"/>
+        <path id="r2" d="M556 220 C 650 220, 640 124, 684 124" stroke="#93c5fd"/>
+        <path id="r3" d="M556 220 C 650 220, 640 188, 684 188" stroke="#fdba74"/>
+        <path id="r4" d="M556 220 C 650 220, 640 252, 684 252" stroke="#fdba74"/>
+        <path id="r5" d="M556 220 C 650 220, 640 316, 684 316" stroke="#6ee7b7"/>
+        <path id="r6" d="M556 220 C 650 220, 620 380, 684 380" stroke="#6ee7b7"/>
+      </g>
+
+      <!-- flowing dots -->
+      <g>
+        <circle r="3.5" fill="#2563eb"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"><mpath href="#l1"/></animateMotion></circle>
+        <circle r="3.5" fill="#2563eb"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.6s"><mpath href="#l2"/></animateMotion></circle>
+        <circle r="3.5" fill="#2563eb"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s"><mpath href="#l3"/></animateMotion></circle>
+        <circle r="3.5" fill="#2563eb"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.8s"><mpath href="#l4"/></animateMotion></circle>
+        <circle r="3.5" fill="#2563eb"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.3s"><mpath href="#r1"/></animateMotion></circle>
+        <circle r="3.5" fill="#2563eb"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.9s"><mpath href="#r2"/></animateMotion></circle>
+        <circle r="3.5" fill="#f97316"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.5s"><mpath href="#r3"/></animateMotion></circle>
+        <circle r="3.5" fill="#f97316"><animateMotion dur="2.6s" repeatCount="indefinite" begin="2.1s"><mpath href="#r4"/></animateMotion></circle>
+        <circle r="3.5" fill="#10b981"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.6s"><mpath href="#r5"/></animateMotion></circle>
+        <circle r="3.5" fill="#10b981"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.7s"><mpath href="#r6"/></animateMotion></circle>
+      </g>
+
+      <!-- input chips -->
+      <g font-size="13.5" font-weight="600" fill="#0f172a">
+        <g><rect x="52" y="100" width="160" height="40" rx="10" fill="#fff" stroke="#e5e7eb"/><circle cx="74" cy="120" r="5" fill="#2563eb"/><text x="90" y="125">File upload</text></g>
+        <g><rect x="52" y="160" width="160" height="40" rx="10" fill="#fff" stroke="#e5e7eb"/><circle cx="74" cy="180" r="5" fill="#2563eb"/><text x="90" y="185">Email</text></g>
+        <g><rect x="52" y="220" width="160" height="40" rx="10" fill="#fff" stroke="#e5e7eb"/><circle cx="74" cy="240" r="5" fill="#2563eb"/><text x="90" y="245">API endpoint</text></g>
+        <g><rect x="52" y="280" width="160" height="40" rx="10" fill="#fff" stroke="#e5e7eb"/><circle cx="74" cy="300" r="5" fill="#2563eb"/><text x="90" y="305">EDI mailbox</text></g>
+      </g>
+
+      <!-- hub -->
+      <circle cx="500" cy="220" r="58" fill="#fff" stroke="url(#ring)" stroke-width="6"/>
+      <text x="500" y="214" text-anchor="middle" font-size="15" font-weight="800" fill="#0f172a">Flow<tspan fill="#f97316">Connect</tspan></text>
+      <text x="500" y="234" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.5" fill="#6b7280">SYNDICATION HUB</text>
+
+      <!-- partner nodes -->
+      <g>
+        <g><rect x="684" y="36" width="256" height="48" rx="12" fill="#fff" stroke="#e5e7eb"/><circle cx="708" cy="60" r="6" fill="#2563eb"/><text x="726" y="55" font-size="14.5" font-weight="700" fill="#0f172a">Southwire</text><text x="726" y="72" font-size="11.5" fill="#6b7280">Manufacturer</text></g>
+        <g><rect x="684" y="100" width="256" height="48" rx="12" fill="#fff" stroke="#e5e7eb"/><circle cx="708" cy="124" r="6" fill="#2563eb"/><text x="726" y="119" font-size="14.5" font-weight="700" fill="#0f172a">Eaton</text><text x="726" y="136" font-size="11.5" fill="#6b7280">Manufacturer</text></g>
+        <g><rect x="684" y="164" width="256" height="48" rx="12" fill="#fff" stroke="#e5e7eb"/><circle cx="708" cy="188" r="6" fill="#f97316"/><text x="726" y="183" font-size="14.5" font-weight="700" fill="#0f172a">Power Sales Associates</text><text x="726" y="200" font-size="11.5" fill="#6b7280">Rep firm</text></g>
+        <g><rect x="684" y="228" width="256" height="48" rx="12" fill="#fff" stroke="#e5e7eb"/><circle cx="708" cy="252" r="6" fill="#f97316"/><text x="726" y="247" font-size="14.5" font-weight="700" fill="#0f172a">Energy Reps</text><text x="726" y="264" font-size="11.5" fill="#6b7280">Rep firm</text></g>
+        <g><rect x="684" y="292" width="256" height="48" rx="12" fill="#fff" stroke="#e5e7eb"/><circle cx="708" cy="316" r="6" fill="#10b981"/><text x="726" y="311" font-size="14.5" font-weight="700" fill="#0f172a">Graybar</text><text x="726" y="328" font-size="11.5" fill="#6b7280">Distributor</text></g>
+        <g><rect x="684" y="356" width="256" height="48" rx="12" fill="#fff" stroke="#e5e7eb"/><circle cx="708" cy="380" r="6" fill="#10b981"/><text x="726" y="375" font-size="14.5" font-weight="700" fill="#0f172a">Rexel</text><text x="726" y="392" font-size="11.5" fill="#6b7280">Distributor</text></g>
+      </g>
+    </svg>
+    <div style="text-align:center;font-size:14px;color:var(--muted);padding:8px 10px 4px">Send once, any way you like — FlowConnect syndicates it to the exact partners you choose.</div>
+  </div></div>
+  <div class="bigline">No other data exchange lets you send data in <span class="grad">any format</span> and does all the work for you.</div>
+</div></section>
+
+<!-- PERSONA PICKER -->
+<section><div class="wrap">
+  <div class="center"><h2>Pick your side of the channel</h2><p class="lead" style="margin-top:14px">FlowConnect works for everyone in the deal — and the payoff is different for each.</p></div>
+  <div class="picker">
+    <a class="pk" href="#mfr"><div class="pi" style="background:var(--mfrc)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 21V10l6 4V10l6 4V8l6 4v9z"/><path d="M3 21h18"/></svg></div><h3>I'm a manufacturer</h3><p>Syndicate once, reach every partner.</p><div class="go" style="color:var(--mfrc)">See the benefits →</div></a>
+    <a class="pk" href="#dist"><div class="pi" style="background:var(--distc)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg></div><h3>I'm a distributor</h3><p>Live data in, POS out — automatically.</p><div class="go" style="color:var(--distc)">See the benefits →</div></a>
+    <a class="pk" href="#rep"><div class="pi" style="background:var(--repc)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/></svg></div><h3>I'm a rep</h3><p>Your own EDI + integration service.</p><div class="go" style="color:var(--repc)">See the benefits →</div></a>
+  </div>
+</div></section>
+
+<!-- MANUFACTURER -->
+<div class="persona soft" id="mfr"><div class="wrap"><div class="frow">
+  <div>
+    <span class="plabel" style="background:var(--mfrc)">For manufacturers</span>
+    <h2 style="margin-top:16px">Syndicate once. Reach your entire network.</h2>
+    <p>Stop maintaining a dozen formats for a dozen destinations. Send FlowConnect your data one time, in whatever shape you have it, and it flows — clean and current — to every rep and distributor you designate.</p>
+    <ul class="flist">
+      <li><span class="chk">✓</span> Send in <b>any format</b> — we do 100% of the transformation</li>
+      <li><span class="chk">✓</span> Deliver product, pricing, orders, invoices, commissions &amp; POS</li>
+      <li><span class="chk">✓</span> You choose exactly which partners see which data</li>
+      <li><span class="chk">✓</span> Need help cleaning or prepping data? Our team runs that for you</li>
+    </ul>
+    <a class="btn blue" style="margin-top:26px" onclick="openDemo()">Get a manufacturer demo →</a>
+  </div>
+  <div class="fvis"><div class="shot">
+    <img src="fc-shots/mfr-overview.png" alt="Manufacturer overview">
+    <div class="cf tl"><span class="d" style="background:var(--mfrc)"></span>Sell-through &amp; coverage<br><small>Across your whole channel</small></div>
+  </div></div>
+</div></div></div>
+
+<!-- DISTRIBUTOR -->
+<div class="persona" id="dist"><div class="wrap"><div class="frow rev">
+  <div>
+    <span class="plabel" style="background:var(--distc)">For distributors</span>
+    <h2 style="margin-top:16px">Live pricing, orders and product data — automatically.</h2>
+    <p>Every manufacturer and rep you work with, piped directly to you and always current. Send your POS back the same way. Pull it into your ERP, or run it live in Flow.</p>
+    <ul class="flist">
+      <li><span class="chk">✓</span> Manufacturer pricing, spec sheets and order status, live</li>
+      <li><span class="chk">✓</span> Send POS in — including the NEMRA POS standard we adhere to</li>
+      <li><span class="chk">✓</span> Pull everything into your own system, or run it in Flow</li>
+      <li><span class="chk">✓</span> Simple to connect and start receiving</li>
+    </ul>
+    <a class="btn green" style="margin-top:26px" onclick="openDemo()">Get a distributor demo →</a>
+  </div>
+  <div class="fvis"><div class="shot">
+    <img src="fc-shots/catalog.png" alt="Syndicated product catalog">
+    <div class="cf br"><span class="d" style="background:var(--distc)"></span>Every line you carry<br><small>Pricing &amp; specs, always current</small></div>
+  </div></div>
+</div></div></div>
+
+<!-- REP -->
+<div class="persona soft" id="rep"><div class="wrap"><div class="frow">
+  <div>
+    <span class="plabel" style="background:var(--repc)">For rep firms</span>
+    <h2 style="margin-top:16px">The dedicated EDI and data integration service reps never had.</h2>
+    <p>Reps have always been left out of the data exchanges. Not anymore. FlowConnect gives your agency its own EDI mailbox on Flow's Tier-1 VAN network — plus API, portal and email integrations — so every distributor and manufacturer's data pipes directly to you in one live feed. A genuine game-changer for how you run.</p>
+    <ul class="flist">
+      <li><span class="chk">✓</span> <b>Your own EDI mailbox</b> on Flow's Tier-1 VAN network</li>
+      <li><span class="chk">✓</span> All your distributor + manufacturer data in one live feed</li>
+      <li><span class="chk">✓</span> No more logging into a dozen manufacturer portals</li>
+      <li><span class="chk">✓</span> Pull it into any system — or run the whole business in Flow</li>
+    </ul>
+    <a class="btn purple" style="margin-top:26px" onclick="openDemo()">Get a rep demo →</a>
+  </div>
+  <div class="fvis"><div class="shot">
+    <img src="fc-shots/partners.png" alt="Rep trading partners">
+    <div class="cf tl"><span class="d" style="background:var(--repc)"></span>One live feed<br><small>Every distributor &amp; factory</small></div>
+  </div></div>
+</div></div></div>
+
+<!-- EDI AND DATA SERVICE -->
+<section class="soft" id="edi"><div class="wrap"><div class="edi">
+  <span class="plabel" style="background:rgba(255,255,255,.14)">EDI and Data Service</span>
+  <h2 style="margin-top:16px">A Tier-1 VAN network and a data service in one.</h2>
+  <p>Flow runs a Tier-1 VAN network, so you can trade documents electronically with any partner running EDI, anywhere — we speak X12 and EDIFACT and translate to whatever the other side needs. And our team runs the data service behind it: cleaning, mapping and prepping your data for distribution so every partner gets it right. Reps finally get an EDI and data service of their own.</p>
+  <div class="ediflow">
+    <div class="edibox">Your mailbox</div><span class="ediconn">→</span>
+    <div class="edibox">FlowConnect VAN</div><span class="ediconn">→</span>
+    <div class="edibox">Any EDI partner</div>
+  </div>
+</div></div></section>
+
+<!-- VALUE USE CASES -->
+<section id="usecases"><div class="wrap">
+  <div class="center"><h2>Get Data Flowing</h2></div>
+  <div class="vgrid">
+
+    <!-- CARD 1: Order status board -->
+    <div class="vcard">
+      <div class="vimg">
+        <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg" style="font-family:'Inter',sans-serif">
+          <text x="22" y="33" font-size="15" font-weight="800" fill="#0f172a">Order pipeline</text>
+          <rect x="370" y="19" width="50" height="21" rx="10.5" fill="#dcfce7"/>
+          <circle cx="384" cy="29.5" r="3" fill="#16a34a"/><text x="392" y="33" font-size="11" font-weight="700" fill="#16a34a">Live</text>
+          <line x1="20" y1="52" x2="420" y2="52" stroke="#eef2f7"/>
+          <!-- row 1 -->
+          <text x="22" y="76" font-size="12.5" font-weight="700" fill="#0f172a">O-10432</text><text x="22" y="91" font-size="10.5" fill="#6b7280">Southwire</text>
+          <line x1="140" y1="83" x2="330" y2="83" stroke="#e5e7eb" stroke-width="4" stroke-linecap="round"/><line x1="140" y1="83" x2="267" y2="83" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="140" cy="83" r="6" fill="#10b981"/><circle cx="203" cy="83" r="6" fill="#10b981"/><circle cx="267" cy="83" r="6" fill="#10b981"/><circle cx="267" cy="83" r="9" fill="none" stroke="#10b981" stroke-width="2"/><circle cx="330" cy="83" r="6" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="346" y="87" font-size="11" font-weight="700" fill="#059669">Shipped</text>
+          <!-- row 2 -->
+          <text x="22" y="126" font-size="12.5" font-weight="700" fill="#0f172a">O-10450</text><text x="22" y="141" font-size="10.5" fill="#6b7280">Eaton</text>
+          <line x1="140" y1="133" x2="330" y2="133" stroke="#e5e7eb" stroke-width="4" stroke-linecap="round"/><line x1="140" y1="133" x2="203" y2="133" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="140" cy="133" r="6" fill="#2563eb"/><circle cx="203" cy="133" r="6" fill="#2563eb"/><circle cx="203" cy="133" r="9" fill="none" stroke="#2563eb" stroke-width="2"/><circle cx="267" cy="133" r="6" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><circle cx="330" cy="133" r="6" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="346" y="137" font-size="11" font-weight="700" fill="#2563eb">In production</text>
+          <!-- row 3 -->
+          <text x="22" y="176" font-size="12.5" font-weight="700" fill="#0f172a">O-10461</text><text x="22" y="191" font-size="10.5" fill="#6b7280">Hubbell</text>
+          <line x1="140" y1="183" x2="330" y2="183" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="140" cy="183" r="6" fill="#10b981"/><circle cx="203" cy="183" r="6" fill="#10b981"/><circle cx="267" cy="183" r="6" fill="#10b981"/><circle cx="330" cy="183" r="6" fill="#10b981"/><circle cx="330" cy="183" r="9" fill="none" stroke="#10b981" stroke-width="2"/>
+          <text x="346" y="187" font-size="11" font-weight="700" fill="#059669">Delivered</text>
+          <!-- row 4 -->
+          <text x="22" y="226" font-size="12.5" font-weight="700" fill="#0f172a">O-10475</text><text x="22" y="241" font-size="10.5" fill="#6b7280">Siemens</text>
+          <line x1="140" y1="233" x2="330" y2="233" stroke="#e5e7eb" stroke-width="4" stroke-linecap="round"/><line x1="140" y1="233" x2="203" y2="233" stroke="#f97316" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="140" cy="233" r="6" fill="#f97316"/><circle cx="203" cy="233" r="6" fill="#f97316"/><circle cx="203" cy="233" r="9" fill="none" stroke="#f97316" stroke-width="2"/><circle cx="267" cy="233" r="6" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><circle cx="330" cy="233" r="6" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+          <path d="M346,238 L352,227 L358,238 Z" fill="#f97316"/><text x="364" y="237" font-size="11" font-weight="700" fill="#ea580c">Delayed</text>
+        </svg>
+      </div>
+      <div class="vb"><h3>Never ask &ldquo;Where&rsquo;s my stuff?&rdquo; again</h3><p>Real-time PO and shipment status across the whole channel — confirmed, in production, shipped or delayed — with proactive alerts the moment a ship date slips. Role-based, so every partner sees exactly what they should.</p></div>
+    </div>
+
+    <!-- CARD 2: POS bar chart -->
+    <div class="vcard">
+      <div class="vimg">
+        <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg" style="font-family:'Inter',sans-serif">
+          <text x="22" y="33" font-size="15" font-weight="800" fill="#0f172a">POS by month</text>
+          <text x="418" y="33" text-anchor="end" font-size="12" font-weight="600" fill="#6b7280">$2.26M YTD</text>
+          <line x1="20" y1="52" x2="420" y2="52" stroke="#eef2f7"/>
+          <g stroke="#f1f5f9"><line x1="30" y1="90" x2="410" y2="90"/><line x1="30" y1="130" x2="410" y2="130"/><line x1="30" y1="170" x2="410" y2="170"/><line x1="30" y1="210" x2="410" y2="210"/></g>
+          <line x1="30" y1="250" x2="410" y2="250" stroke="#e5e7eb"/>
+          <!-- bars -->
+          <rect x="40" y="140" width="42" height="110" rx="6" fill="#2563eb"/><text x="61" y="132" text-anchor="middle" font-size="9.5" fill="#94a3b8">$316k</text><text x="61" y="266" text-anchor="middle" font-size="11" fill="#6b7280">Jan</text>
+          <rect x="106" y="132" width="42" height="118" rx="6" fill="#2563eb"/><text x="127" y="124" text-anchor="middle" font-size="9.5" fill="#94a3b8">$339k</text><text x="127" y="266" text-anchor="middle" font-size="11" fill="#6b7280">Feb</text>
+          <rect x="172" y="108" width="42" height="142" rx="6" fill="#2563eb"/><text x="193" y="100" text-anchor="middle" font-size="9.5" fill="#94a3b8">$407k</text><text x="193" y="266" text-anchor="middle" font-size="11" fill="#6b7280">Mar</text>
+          <rect x="238" y="124" width="42" height="126" rx="6" fill="#2563eb"/><text x="259" y="116" text-anchor="middle" font-size="9.5" fill="#94a3b8">$362k</text><text x="259" y="266" text-anchor="middle" font-size="11" fill="#6b7280">Apr</text>
+          <rect x="304" y="100" width="42" height="150" rx="6" fill="#f97316"/><text x="325" y="92" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ea580c">$429k</text><text x="325" y="266" text-anchor="middle" font-size="11" fill="#6b7280">May</text>
+          <rect x="370" y="108" width="42" height="142" rx="6" fill="#2563eb"/><text x="391" y="100" text-anchor="middle" font-size="9.5" fill="#94a3b8">$407k</text><text x="391" y="266" text-anchor="middle" font-size="11" fill="#6b7280">Jun</text>
+        </svg>
+      </div>
+      <div class="vb"><h3>Point-of-sale across every distributor and line</h3><p>Sell-through pulled straight from your distributors, rolled up by month, line and location — including the NEMRA POS standard we adhere to. Send POS in, or see it live.</p></div>
+    </div>
+
+    <!-- CARD 3: Analytics trend -->
+    <div class="vcard">
+      <div class="vimg">
+        <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg" style="font-family:'Inter',sans-serif">
+          <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f97316" stop-opacity="0.28"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></linearGradient></defs>
+          <text x="22" y="33" font-size="15" font-weight="800" fill="#0f172a">Channel analytics</text>
+          <rect x="356" y="19" width="64" height="21" rx="10.5" fill="#dcfce7"/><text x="388" y="33" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">+14% YoY</text>
+          <line x1="20" y1="52" x2="420" y2="52" stroke="#eef2f7"/>
+          <!-- KPI chips -->
+          <rect x="20" y="62" width="125" height="46" rx="10" fill="#f8fafc" stroke="#eef2f7"/><text x="34" y="82" font-size="10.5" fill="#6b7280">Sell-through</text><text x="34" y="100" font-size="15" font-weight="800" fill="#0f172a">$2.26M</text>
+          <rect x="157" y="62" width="125" height="46" rx="10" fill="#f8fafc" stroke="#eef2f7"/><text x="171" y="82" font-size="10.5" fill="#6b7280">Active partners</text><text x="171" y="100" font-size="15" font-weight="800" fill="#0f172a">18</text>
+          <rect x="294" y="62" width="126" height="46" rx="10" fill="#f8fafc" stroke="#eef2f7"/><text x="308" y="82" font-size="10.5" fill="#6b7280">Fill rate</text><text x="308" y="100" font-size="15" font-weight="800" fill="#0f172a">97%</text>
+          <!-- trend -->
+          <g stroke="#f1f5f9"><line x1="30" y1="150" x2="410" y2="150"/><line x1="30" y1="190" x2="410" y2="190"/></g>
+          <line x1="30" y1="250" x2="410" y2="250" stroke="#e5e7eb"/>
+          <path d="M40,196 C 76,196 76,178 112,178 C 148,178 148,184 184,184 C 220,184 220,150 256,150 C 292,150 292,158 328,158 C 364,158 364,124 400,124 L400,250 L40,250 Z" fill="url(#area)"/>
+          <path d="M40,196 C 76,196 76,178 112,178 C 148,178 148,184 184,184 C 220,184 220,150 256,150 C 292,150 292,158 328,158 C 364,158 364,124 400,124" fill="none" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+          <g fill="#fff" stroke="#f97316" stroke-width="2.5"><circle cx="40" cy="196" r="3.5"/><circle cx="112" cy="178" r="3.5"/><circle cx="184" cy="184" r="3.5"/><circle cx="256" cy="150" r="3.5"/><circle cx="328" cy="158" r="3.5"/><circle cx="400" cy="124" r="3.5"/></g>
+          <g font-size="11" fill="#6b7280" text-anchor="middle"><text x="40" y="268">Jan</text><text x="112" y="268">Feb</text><text x="184" y="268">Mar</text><text x="256" y="268">Apr</text><text x="328" y="268">May</text><text x="400" y="268">Jun</text></g>
+        </svg>
+      </div>
+      <div class="vb"><h3>Channel analytics that stay current</h3><p>Sell-through, pipeline, top distributors and what&rsquo;s flowing in — every metric built on live data from across your network, not last quarter&rsquo;s spreadsheet.</p></div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- OPEN / SECURITY -->
+<section class="soft"><div class="wrap">
+  <div class="center" style="margin-bottom:44px"><h2>Open by design. Your data, your control.</h2><p class="lead" style="margin-top:14px">You don't have to use the Flow platform to be on the network. Anyone can connect and pull data out by download or API. You decide who can see and access each piece.</p></div>
+  <div class="statband">
+    <div class="stat"><div class="n">SOC 2</div><div class="l">Pending certification</div></div>
+    <div class="stat"><div class="n">Role-based</div><div class="l">You control who sees what</div></div>
+    <div class="stat"><div class="n">You own it</div><div class="l">Export or delete anytime</div></div>
+    <div class="stat"><div class="n">99.9%</div><div class="l">Uptime</div></div>
+  </div>
+</div></section>
+
+<!-- CTA -->
+<section><div class="wrap"><div class="ctabig">
+  <h2>Get your data where it needs to go.</h2>
+  <p>Send it once, in any format, and reach every manufacturer, rep and distributor who needs it.</p>
+  <div class="ctabtns"><a class="btn" onclick="openDemo()">I'm a manufacturer</a><a class="btn" onclick="openDemo()">I'm a distributor</a><a class="btn" onclick="openDemo()">I'm a rep</a></div>
+</div></div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div style="max-width:300px">
+      <div class="nav-logo"><img src="fc-shots/orange-logo.png" alt="FlowConnect"><span><b>Flow</b><span class="lt">Connect</span></span></div>
+      <p style="margin-top:14px;font-size:14px;color:#64748b">The effortless way to syndicate your channel data to the partners who need it. Part of the Flow ecosystem.</p>
+    </div>
+    <div class="col"><b>Product</b><a href="#how">How it works</a><a href="#edi">EDI &amp; Data Service</a><a href="#">Data services</a><a href="https://www.flowrms.com" target="_blank">The Flow platform</a></div>
+    <div class="col"><b>For</b><a href="#mfr">Manufacturers</a><a href="#dist">Distributors</a><a href="#rep">Reps</a></div>
+    <div class="col"><b>Company</b><a href="https://www.flowrms.com" target="_blank">Flow RMS</a><a href="#">Security</a><a href="#">Contact</a></div>
+  </div>
+  <div class="fbot"><span>© 2026 Flow · FlowConnect</span><span>Built for the industrial supply chain</span></div>
+</div></footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeDemo()">
+  <div class="box giant">
+    <div class="mhead">
+      <div><h3 style="font-size:20px">Book your FlowConnect demo</h3><p style="color:var(--muted);font-size:14px;margin-top:2px">Pick a time that works — about 20 minutes.</p></div>
+      <button class="mclose" onclick="closeDemo()" aria-label="Close">&times;</button>
+    </div>
+    <div class="mbody">
+      <div class="tidycal-embed" data-path="flow/flow-connect"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script>
+<script>
+  function openDemo(){document.getElementById('modal').classList.add('open');}
+  function closeDemo(){document.getElementById('modal').classList.remove('open');}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDemo();});
+</script>
+</body>
+</html>
