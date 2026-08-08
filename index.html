@@ -683,13 +683,70 @@
       }
     }
 
+    /* solid chart bodies, faded in once the grains have settled */
+    var RGB = [[37,99,235],[249,115,22],[16,185,129]];
+    function rgba(c, a){ var v = RGB[c]; return 'rgba(' + v[0] + ',' + v[1] + ',' + v[2] + ',' + a.toFixed(3) + ')'; }
+    function IW(){ return W - 2*PADX; }
+    function IH(){ return H - 2*PADY; }
+    function px(x, y){ return [PADX + x*IW(), PADY + y*IH()]; }
+
+    function solidBar(a){
+      var bw = 1/BARS.length, pad = bw*0.24, r = Math.min(6, IW()*bw*0.18);
+      for(var b=0;b<BARS.length;b++){
+        var p0 = px(b*bw + pad, 1 - BARS[b]);
+        var w = (bw - 2*pad)*IW(), h = BARS[b]*IH();
+        ctx.fillStyle = rgba(b % 3, a*0.90);
+        ctx.beginPath();
+        if(ctx.roundRect) ctx.roundRect(p0[0], p0[1], w, h, [r,r,0,0]);
+        else ctx.rect(p0[0], p0[1], w, h);
+        ctx.fill();
+      }
+    }
+    function tracePath(){
+      var n = 72, p;
+      for(var i=0;i<=n;i++){
+        var t = i/n; p = px(t, 1 - curve(t));
+        i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]);
+      }
+    }
+    function solidLine(a){
+      ctx.strokeStyle = rgba(2, a*0.95); ctx.lineWidth = 3.2;
+      ctx.lineJoin = ctx.lineCap = 'round';
+      ctx.beginPath(); tracePath(); ctx.stroke();
+    }
+    function solidArea(a){
+      var g = ctx.createLinearGradient(0, PADY, 0, PADY + IH());
+      g.addColorStop(0, rgba(0, a*0.55)); g.addColorStop(1, rgba(0, a*0.10));
+      ctx.fillStyle = g;
+      ctx.beginPath(); tracePath();
+      ctx.lineTo(PADX + IW(), PADY + IH()); ctx.lineTo(PADX, PADY + IH()); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = rgba(1, a*0.95); ctx.lineWidth = 2.6;
+      ctx.lineJoin = ctx.lineCap = 'round';
+      ctx.beginPath(); tracePath(); ctx.stroke();
+    }
+    function solidDonut(a){
+      var cx = PADX + IW()/2, cy = PADY + IH()/2;
+      var ri = 0.33*IH(), ro = 0.46*IH(), mid = (ri + ro)/2;
+      var stops = [0, 0.36, 0.66, 1], cols = [0, 1, 2];
+      ctx.lineWidth = ro - ri; ctx.lineCap = 'butt';
+      for(var s=0;s<3;s++){
+        ctx.strokeStyle = rgba(cols[s], a*0.90);
+        ctx.beginPath();
+        ctx.arc(cx, cy, mid, stops[s]*Math.PI*2 - Math.PI/2, stops[s+1]*Math.PI*2 - Math.PI/2);
+        ctx.stroke();
+      }
+    }
+    var SOLID = [solidBar, solidLine, solidArea, solidDonut];
+
     var blA = 0.30;                          /* baseline fades out under the donut */
+    var solidA = 0, solidK = 0;
     function draw(){
       ctx.clearRect(0,0,W,H);
       if(blA > 0.004){
         ctx.fillStyle = 'rgba(148,163,184,' + blA.toFixed(3) + ')';
         ctx.fillRect(PADX, H - PADY, W - 2*PADX, 1);
       }
+      if(solidA > 0.004) SOLID[solidK](solidA);
       for(var c=0;c<3;c++){
         ctx.fillStyle = COL[c]; ctx.globalAlpha = .82;
         for(var i=0;i<parts.length;i++){
@@ -717,6 +774,16 @@
 
       blA += ((fn === donut ? 0 : 0.30) - blA)*0.06;
 
+      /* fill in once the grains have arrived, drain it before they scatter */
+      var want = 0;
+      if(local < HOLD){
+        var up = Math.min(1, local/900), dn = Math.min(1, (HOLD - local)/450);
+        want = Math.min(up, dn);
+        want = want*want*(3 - 2*want);
+        solidK = k;
+      }
+      solidA += (want - solidA)*0.14;
+
       var e = 0.085, tm = el/380;
       for(var i=0;i<parts.length;i++){
         var p = parts[i], tg = toPx(fn(i));
@@ -741,6 +808,7 @@
     if(reduce){                              /* hold a formed bar chart, no motion */
       for(var i=0;i<parts.length;i++){ var tg = toPx(bar(i)); parts[i].x = tg.x; parts[i].y = tg.y; parts[i].c = tg.c; }
       caps[0].classList.add('on');
+      solidA = 1; solidK = 0;
       draw();
     } else if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){
