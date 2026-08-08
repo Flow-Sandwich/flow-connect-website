@@ -115,6 +115,84 @@
   .ctabtns .btn{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.4);}
   .ctabtns .btn.solid{background:#fff;color:#5b21b6;border:none;}
 
+  /* messy data -> scanned -> clean (looping motion graphic) */
+  .dtx{--dur:12s;position:relative;max-width:1000px;margin:56px auto 0;height:430px;overflow:hidden;
+    border:1px solid var(--bd);border-radius:18px;box-shadow:0 30px 70px rgba(15,23,42,.10);
+    background:linear-gradient(180deg,#fbfcff 0%,#f4f6ff 55%,#f5fbf8 100%);}
+  .dtx .lbl{position:absolute;top:20px;left:0;right:0;text-align:center;font-size:11.5px;font-weight:800;
+    letter-spacing:1.3px;text-transform:uppercase;opacity:0;}
+  .dtx .lbl.raw{color:#b91c1c;animation:dtxRawLbl var(--dur) infinite;}
+  .dtx .lbl.scan{color:var(--blue);animation:dtxScanLbl var(--dur) infinite;}
+  .dtx .chips{position:absolute;inset:0;}
+  .rawchip{position:absolute;left:50%;top:50%;width:126px;margin:-15px 0 0 -63px;padding:7px 6px;
+    text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;font-weight:600;
+    background:#fff5f5;border:1px solid #fecaca;color:#b91c1c;border-radius:8px;
+    box-shadow:0 4px 12px rgba(185,28,28,.07);
+    transform:translate(var(--x),var(--y)) rotate(var(--r));
+    animation:dtxChip var(--dur) infinite;}
+  .rawchip.wide{width:180px;margin-left:-90px;}
+  .dtxscan{position:absolute;top:7%;bottom:7%;left:6%;width:3px;opacity:0;border-radius:3px;
+    background:linear-gradient(180deg,transparent,var(--blue),transparent);
+    box-shadow:0 0 24px 7px rgba(37,99,235,.32);animation:dtxScan var(--dur) infinite;}
+  .dtxtbl{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(880px,92%);
+    background:#fff;border-radius:14px;padding:14px;box-shadow:0 18px 46px rgba(15,23,42,.12);
+    clip-path:inset(0 100% 0 0);animation:dtxReveal var(--dur) infinite;}
+  .dtxtbl .hd,.dtxtbl .rw{display:grid;grid-template-columns:1.3fr 1fr .8fr .5fr 1fr;gap:8px;}
+  .dtxtbl .rw{margin-top:8px;}
+  .dtxtbl .hd span{background:#eff6ff;color:var(--blue);font-size:10.5px;font-weight:800;letter-spacing:.7px;
+    text-align:center;padding:9px 4px;border-radius:7px;}
+  .dtxtbl .rw span{background:#fff;border:1px solid #d1fae5;color:var(--ink);font-size:13.5px;font-weight:600;
+    text-align:center;padding:10px 4px;border-radius:8px;}
+  .dtxbadge{position:absolute;left:0;right:0;bottom:24px;display:flex;justify-content:center;align-items:center;
+    gap:10px;opacity:0;animation:dtxBadge var(--dur) infinite;}
+  .dtxbadge b{color:var(--green);font-size:14.5px;font-weight:800;}
+  .dtxbadge i{font-style:normal;background:#d1fae5;color:#047857;font-size:12px;font-weight:700;
+    padding:5px 11px;border-radius:999px;}
+
+  @keyframes dtxChip{
+    0%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.9);}
+    5%{opacity:1;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1);}
+    28%{opacity:1;transform:translate(calc(var(--x) + var(--dx)),calc(var(--y) + var(--dy))) rotate(var(--r)) scale(1);}
+    40%{opacity:.9;transform:translate(calc(var(--x) * .28),calc(var(--y) * .28)) rotate(0deg) scale(.9);}
+    47%,100%{opacity:0;transform:translate(0,0) rotate(0deg) scale(.5);}
+  }
+  @keyframes dtxScan{
+    0%,44%{left:6%;opacity:0;} 47%{opacity:.9;} 62%{left:94%;opacity:.9;} 66%,100%{left:94%;opacity:0;}
+  }
+  @keyframes dtxReveal{
+    0%,46%{clip-path:inset(0 100% 0 0);opacity:1;}
+    64%,92%{clip-path:inset(0 0 0 0);opacity:1;}
+    97%,100%{clip-path:inset(0 0 0 0);opacity:0;}
+  }
+  @keyframes dtxBadge{
+    0%,64%{opacity:0;transform:translateY(8px);} 70%,90%{opacity:1;transform:translateY(0);}
+    96%,100%{opacity:0;transform:translateY(0);}
+  }
+  @keyframes dtxRawLbl{0%,3%{opacity:0;} 8%,30%{opacity:1;} 40%,100%{opacity:0;}}
+  @keyframes dtxScanLbl{0%,42%{opacity:0;} 48%,62%{opacity:1;} 68%,100%{opacity:0;}}
+
+  @media(max-width:920px){
+    .dtx{height:370px;}
+    .dtx .chips{transform:scale(.52);}
+    .rawchip.sm,.rawchip.far{display:none;}
+    .dtx .lbl{font-size:9.5px;letter-spacing:.6px;padding:0 12px;}
+    .dtxtbl{top:44%;width:94%;padding:10px;}
+    .dtxtbl .hd,.dtxtbl .rw{grid-template-columns:1.3fr 1fr .8fr .5fr;gap:6px;}
+    .dtxtbl .rw{margin-top:6px;}
+    .dtxtbl .c5{display:none;}
+    .dtxtbl .hd span{font-size:9.5px;letter-spacing:.3px;padding:7px 3px;}
+    .dtxtbl .rw span{font-size:11.5px;padding:7px 3px;}
+    .dtxbadge{flex-direction:column;gap:5px;bottom:14px;} .dtxbadge b{font-size:12.5px;} .dtxbadge i{font-size:11px;}
+  }
+  /* honour reduced-motion: hold the finished, clean state */
+  @media(prefers-reduced-motion:reduce){
+    .dtx *{animation:none!important;}
+    .dtx .chips,.dtxscan,.dtx .lbl{display:none;}
+    .dtxtbl{clip-path:none;opacity:1;}
+    .dtxbadge{opacity:1;}
+  }
+
   footer{background:#0a0e1c;color:#8b99b4;padding:56px 0 34px;}
   footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;}
   footer a{color:#8b99b4;font-size:14px;} footer a:hover{color:#fff;}
@@ -257,6 +335,42 @@
     <div class="step"><div class="num">2</div><h3>We transform it</h3><p>Our proprietary AI and analytics engine normalize, clean and map your data on our side. No manual mapping, no vendor-specific templates, no work for you.</p></div>
     <div class="step"><div class="num">3</div><h3>Your partners get it</h3><p>Delivered to the exact partners you designate. They pull it however they want — download, API, EDI — or run it live in the Flow platform.</p></div>
   </div>
+  <!-- messy -> clean motion graphic -->
+  <div class="dtx" role="img" aria-label="Animation: messy, inconsistent data from many sources is scanned and normalized into one clean, standardized table.">
+    <div class="lbl raw">Raw input — every format, every spelling</div>
+    <div class="lbl scan">Normalizing &amp; mapping</div>
+    <div class="chips">
+      <div class="rawchip far" style="--x:-380px;--y:-124px;--r:-7deg;--dx:9px;--dy:-7px">acme corp.</div>
+      <div class="rawchip wide" style="--x:-186px;--y:-152px;--r:4deg;--dx:-7px;--dy:8px">ACME CORPORATION</div>
+      <div class="rawchip sm" style="--x:52px;--y:-138px;--r:-3deg;--dx:6px;--dy:7px">Acme Corp</div>
+      <div class="rawchip" style="--x:250px;--y:-118px;--r:6deg;--dx:-8px;--dy:-6px">abc1234</div>
+      <div class="rawchip sm" style="--x:394px;--y:-94px;--r:-5deg;--dx:7px;--dy:9px">ABC-1234</div>
+      <div class="rawchip far" style="--x:-398px;--y:-42px;--r:5deg;--dx:8px;--dy:6px">45.99</div>
+      <div class="rawchip" style="--x:-228px;--y:-60px;--r:-6deg;--dx:-6px;--dy:-8px">$45.99</div>
+      <div class="rawchip sm" style="--x:-36px;--y:-72px;--r:3deg;--dx:7px;--dy:-7px">USD 45.99</div>
+      <div class="rawchip" style="--x:176px;--y:-48px;--r:-4deg;--dx:-9px;--dy:7px">3/15/26</div>
+      <div class="rawchip sm" style="--x:376px;--y:-26px;--r:7deg;--dx:6px;--dy:-6px">2026-03-15</div>
+      <div class="rawchip far" style="--x:-368px;--y:42px;--r:-5deg;--dx:7px;--dy:8px">ea</div>
+      <div class="rawchip" style="--x:-198px;--y:64px;--r:6deg;--dx:-7px;--dy:6px">EACH</div>
+      <div class="rawchip sm" style="--x:-18px;--y:54px;--r:-3deg;--dx:8px;--dy:-7px">EA</div>
+      <div class="rawchip" style="--x:168px;--y:72px;--r:5deg;--dx:-6px;--dy:-8px">widget assy</div>
+      <div class="rawchip sm wide" style="--x:358px;--y:52px;--r:-6deg;--dx:7px;--dy:7px">WIDGET ASSEMBLY</div>
+      <div class="rawchip far" style="--x:-330px;--y:134px;--r:4deg;--dx:-8px;--dy:6px">pending</div>
+      <div class="rawchip sm" style="--x:-106px;--y:150px;--r:-5deg;--dx:7px;--dy:-7px">Active</div>
+      <div class="rawchip" style="--x:112px;--y:142px;--r:6deg;--dx:-7px;--dy:8px">delta llc</div>
+      <div class="rawchip sm" style="--x:332px;--y:128px;--r:-4deg;--dx:6px;--dy:7px">DELTA, LLC</div>
+    </div>
+    <div class="dtxscan"></div>
+    <div class="dtxtbl">
+      <div class="hd"><span>COMPANY</span><span>PART NO.</span><span>PRICE</span><span>UOM</span><span class="c5">DATE</span></div>
+      <div class="rw"><span>Acme Corp</span><span>ABC-1234</span><span>$45.99</span><span>EA</span><span class="c5">2026-03-15</span></div>
+      <div class="rw"><span>Beta Inc</span><span>DEF-4567</span><span>$12.50</span><span>EA</span><span class="c5">2026-03-15</span></div>
+      <div class="rw"><span>Delta LLC</span><span>GHI-7890</span><span>$89.00</span><span>LF</span><span class="c5">2026-03-15</span></div>
+      <div class="rw"><span>Gamma Co</span><span>JKL-0123</span><span>$34.25</span><span>EA</span><span class="c5">2026-03-15</span></div>
+    </div>
+    <div class="dtxbadge"><b>✓ Cleaned &amp; normalized</b><i>19 raw values → 4 clean rows</i></div>
+  </div>
+
   <div class="bigline">No other data exchange lets you send data in <span class="grad">any format</span> and does all the work for you.</div>
 </div></section>
 
