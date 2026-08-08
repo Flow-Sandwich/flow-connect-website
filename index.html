@@ -193,6 +193,19 @@
     .dtxbadge{opacity:1;}
   }
 
+  /* particles gathering into charts */
+  .sandfx{position:relative;max-width:1000px;margin:58px auto 0;padding:16px;overflow:hidden;
+    background:#fff;border:1px solid var(--bd);border-radius:18px;box-shadow:0 26px 60px rgba(15,23,42,.10);}
+  .sandfx canvas{display:block;width:100%;height:330px;}
+  .sandfx .caps{position:absolute;top:20px;left:26px;right:26px;height:20px;pointer-events:none;}
+  .sandfx .cap{position:absolute;left:0;top:0;font-size:12px;font-weight:800;letter-spacing:1.1px;
+    text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity .45s ease;}
+  .sandfx .cap.on{opacity:1;}
+  @media(max-width:920px){
+    .sandfx{margin-top:40px;padding:12px;} .sandfx canvas{height:230px;}
+    .sandfx .caps{top:16px;left:18px;} .sandfx .cap{font-size:10px;letter-spacing:.7px;}
+  }
+
   footer{background:#0a0e1c;color:#8b99b4;padding:56px 0 34px;}
   footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;}
   footer a{color:#8b99b4;font-size:14px;} footer a:hover{color:#fff;}
@@ -551,6 +564,17 @@
     <div class="stat"><div class="n">You own it</div><div class="l">Export or delete anytime</div></div>
     <div class="stat"><div class="n">99.9%</div><div class="l">Uptime</div></div>
   </div>
+
+  <!-- particles gathering into charts -->
+  <div class="sandfx" role="img" aria-label="Animation: thousands of particles gather to form a bar chart, then a line chart, an area chart and a donut chart in turn.">
+    <div class="caps">
+      <span class="cap" style="color:var(--blue)">Bookings by month</span>
+      <span class="cap" style="color:var(--green)">Sell-through trend</span>
+      <span class="cap" style="color:var(--orange)">Pipeline coverage</span>
+      <span class="cap" style="color:var(--ink)">Mix by product line</span>
+    </div>
+    <canvas id="sandcv"></canvas>
+  </div>
 </div></section>
 
 <!-- CTA -->
@@ -587,6 +611,150 @@
 
 <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script>
 <script>
+  /* sand-particle charts: bar -> line -> area -> donut, on a loop */
+  (function(){
+    var cv = document.getElementById('sandcv');
+    if(!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d');
+    var caps = [].slice.call(document.querySelectorAll('.sandfx .cap'));
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var COL = ['#2563eb','#f97316','#10b981'];
+    var W = 0, H = 0, PADX = 26, PADY = 22, N = 1500;
+    var parts = [], raf = null, t0 = null, active = -1;
+
+    /* deterministic pseudo-random so shapes are stable across frames */
+    function rnd(i, s){ var x = Math.sin(i*127.1 + s*311.7) * 43758.5453; return x - Math.floor(x); }
+
+    var BARS = [.40,.62,.48,.78,.56,.90,.68,.84];
+    var LINE = [.28,.44,.36,.58,.50,.72,.64,.86,.76];
+
+    function curve(t){                       /* smooth value 0..1 along the series */
+      var n = LINE.length - 1, p = t*n, i = Math.min(n-1, Math.floor(p)), f = p - i;
+      var s = f*f*(3 - 2*f);
+      return LINE[i] + (LINE[i+1] - LINE[i])*s;
+    }
+
+    function bar(i){
+      var b = i % BARS.length, bw = 1/BARS.length, pad = bw*0.24;
+      return {x: b*bw + pad + rnd(i,1)*(bw - 2*pad), y: 1 - rnd(i,2)*BARS[b], c: b % 3};
+    }
+    function line(i){
+      var t = (i + rnd(i,3)*0.7) / N; t = t < 0 ? 0 : t > 1 ? 1 : t;
+      return {x: t, y: 1 - curve(t) + (rnd(i,4) - 0.5)*0.030, c: i % 7 === 0 ? 1 : 2};
+    }
+    function area(i){
+      var t = rnd(i,5), top = 1 - curve(t);
+      var y = top + rnd(i,6)*(1 - top);
+      return {x: t, y: y, c: (y - top) < 0.05 ? 1 : 0};
+    }
+    function donut(i){
+      var frac = i / N, ang = frac*Math.PI*2 - Math.PI/2;
+      var rr = 0.33 + rnd(i,8)*0.13;
+      var asp = (W - 2*PADX) / (H - 2*PADY) || 1;
+      return {x: 0.5 + Math.cos(ang)*rr/asp, y: 0.5 + Math.sin(ang)*rr,
+              c: frac < 0.36 ? 0 : frac < 0.66 ? 1 : 2};
+    }
+    function scatter(i){ return {x: rnd(i,9), y: rnd(i,10), c: i % 3}; }
+
+    var SHAPES = [bar, line, area, donut];
+    var CYCLE = 4600, HOLD = 3100, SCAT = 700;   /* hold, disperse, re-form */
+
+    function toPx(p){ return {x: PADX + p.x*(W - 2*PADX), y: PADY + p.y*(H - 2*PADY), c: p.c}; }
+
+    function size(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = cv.clientWidth, h = cv.clientHeight;
+      if(!w || !h) return false;
+      var ow = W, oh = H;
+      W = w; H = h;
+      cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if(ow && oh) for(var i=0;i<parts.length;i++){ parts[i].x *= W/ow; parts[i].y *= H/oh; }
+      return true;
+    }
+
+    function init(){
+      N = W > 700 ? 1500 : 750;            /* fewer grains to push on small screens */
+      parts = [];
+      for(var i=0;i<N;i++){
+        var s = toPx(scatter(i));
+        parts.push({x:s.x, y:s.y, c:s.c, s: 1.2 + rnd(i,11)*1.3, ph: rnd(i,12)*6.283});
+      }
+    }
+
+    var blA = 0.30;                          /* baseline fades out under the donut */
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      if(blA > 0.004){
+        ctx.fillStyle = 'rgba(148,163,184,' + blA.toFixed(3) + ')';
+        ctx.fillRect(PADX, H - PADY, W - 2*PADX, 1);
+      }
+      for(var c=0;c<3;c++){
+        ctx.fillStyle = COL[c]; ctx.globalAlpha = .82;
+        for(var i=0;i<parts.length;i++){
+          var p = parts[i];
+          if(p.c !== c) continue;
+          ctx.fillRect(p.x, p.y, p.s, p.s);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function frame(ts){
+      if(t0 === null) t0 = ts;
+      var el = ts - t0, k = Math.floor(el/CYCLE) % SHAPES.length, local = el % CYCLE;
+      var fn, next = (k + 1) % SHAPES.length;
+      if(local < HOLD) fn = SHAPES[k];
+      else if(local < HOLD + SCAT) fn = scatter;
+      else fn = SHAPES[next];
+
+      var show = local < HOLD + SCAT*0.5 ? k : next;
+      if(show !== active){
+        active = show;
+        for(var q=0;q<caps.length;q++) caps[q].classList.toggle('on', q === show);
+      }
+
+      blA += ((fn === donut ? 0 : 0.30) - blA)*0.06;
+
+      var e = 0.085, tm = el/380;
+      for(var i=0;i<parts.length;i++){
+        var p = parts[i], tg = toPx(fn(i));
+        var dx = tg.x - p.x, dy = tg.y - p.y;
+        p.x += dx*e; p.y += dy*e;
+        p.c = tg.c;
+        /* grains shimmer more while they're still travelling */
+        var amp = Math.min(2.4, Math.sqrt(dx*dx + dy*dy)*0.07) + 0.18;
+        p.x += Math.sin(tm + p.ph)*amp*0.14;
+        p.y += Math.cos(tm*0.9 + p.ph)*amp*0.14;
+      }
+      draw();
+      raf = requestAnimationFrame(frame);
+    }
+
+    function start(){ if(raf === null && !reduce){ t0 = null; raf = requestAnimationFrame(frame); } }
+    function stop(){ if(raf !== null){ cancelAnimationFrame(raf); raf = null; } }
+
+    if(!size()) return;
+    init();
+
+    if(reduce){                              /* hold a formed bar chart, no motion */
+      for(var i=0;i<parts.length;i++){ var tg = toPx(bar(i)); parts[i].x = tg.x; parts[i].y = tg.y; parts[i].c = tg.c; }
+      caps[0].classList.add('on');
+      draw();
+    } else if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        es[0].isIntersecting ? start() : stop();
+      }, {threshold: 0.05}).observe(cv);
+    } else { start(); }
+
+    var rt;
+    window.addEventListener('resize', function(){
+      clearTimeout(rt);
+      rt = setTimeout(function(){ if(size() && reduce) draw(); }, 150);
+    });
+  })();
+
   function openDemo(){document.getElementById('modal').classList.add('open');}
   function closeDemo(){document.getElementById('modal').classList.remove('open');}
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDemo();});
