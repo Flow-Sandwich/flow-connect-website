@@ -658,7 +658,7 @@
     function scatter(i){ return {x: rnd(i,9), y: rnd(i,10), c: i % 3}; }
 
     var SHAPES = [bar, line, area, donut];
-    var CYCLE = 4600, HOLD = 3100, SCAT = 700;   /* hold, disperse, re-form */
+    var CYCLE = 3700, HOLD = 2200, SCAT = 700;   /* hold, disperse, re-form */
 
     function toPx(p){ return {x: PADX + p.x*(W - 2*PADX), y: PADY + p.y*(H - 2*PADY), c: p.c}; }
 
@@ -777,7 +777,7 @@
       /* fill in once the grains have arrived, drain it before they scatter */
       var want = 0;
       if(local < HOLD){
-        var up = Math.min(1, local/900), dn = Math.min(1, (HOLD - local)/450);
+        var up = Math.min(1, local/650), dn = Math.min(1, (HOLD - local)/380);
         want = Math.min(up, dn);
         want = want*want*(3 - 2*want);
         solidK = k;
