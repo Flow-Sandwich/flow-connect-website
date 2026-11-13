@@ -70,7 +70,9 @@ section.band { background: var(--band); border-block: 1px solid var(--rule); }
 .dd .dd-ok { background: #e8f1ff; color: #1c4fa8; border-radius: 12px; padding: 14px; font-size: .94rem; line-height: 1.5; }
 .dd .dd-ok a { color: #1c4fa8; font-weight: 700; }
 .dd [hidden] { display: none !important; }
-.dd .dd-cal { min-height: 560px; border-top: 1px solid #dfe6f0; margin: 4px -26px 0; padding: 8px 14px 0; }
+.dd .dd-cal { min-height: 560px; border-top: 1px solid #dfe6f0; margin: 4px -26px 0; padding: 8px 14px 0; position: relative; }
+.dd .dd-cal::before { content: "Loading the calendar…"; position: absolute; top: 40px; left: 0; right: 0; text-align: center; color: #56627a; font-size: .95rem; z-index: 0; }
+.dd .dd-cal iframe { position: relative; z-index: 1; }
 .dd .dd-alt { font-size: .86rem; }
 .dd .dd-alt a { color: #2b7cf3; font-weight: 600; }
 .dd input:focus-visible, .dd button:focus-visible { outline: 3px solid rgba(43,124,243,.35); outline-offset: 2px; }
@@ -901,11 +903,16 @@ addToQuote(EX[2].sku); addToQuote(EX[2].sku); toast = ""; render();
   const d = document.getElementById("demo-dlg");
   let loaded = false;
   // Load TidyCal's embed the first time someone asks for it, not on every page view.
-  const open = () => {
+  // TidyCal takes a few seconds to draw, so start as soon as someone heads for a demo button.
+  const load = () => {
     if (!loaded) { loaded = true; const s = document.createElement("script"); s.src = "https://asset-tidycal.b-cdn.net/js/embed.js"; s.async = true; document.body.appendChild(s); }
-    d.showModal();
   };
-  document.querySelectorAll(".demo-open").forEach(b => b.addEventListener("click", e => { e.preventDefault(); open(); }));
+  const open = () => { load(); d.showModal(); };
+  document.querySelectorAll(".demo-open").forEach(b => {
+    b.addEventListener("click", e => { e.preventDefault(); open(); });
+    b.addEventListener("pointerenter", load, { once: true });
+    b.addEventListener("focus", load, { once: true });
+  });
   document.getElementById("dd-x").onclick = () => d.close();
   d.addEventListener("click", e => { if (e.target === d) d.close(); });
 })();
