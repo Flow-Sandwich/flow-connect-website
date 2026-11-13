@@ -1,0 +1,924 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Electrical Product Studio — FlowConnect</title><meta name="description" content="See what FlowConnect Product Studio makes for electrical products: photos, video and spec-ready content your reps and distributors can use."><meta property="og:title" content="Electrical Product Studio — FlowConnect"><meta property="og:description" content="See what FlowConnect Product Studio makes for electrical products: photos, video and spec-ready content your reps and distributors can use."><meta property="og:type" content="website"><link rel="icon" href="../../favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32.png"><link rel="apple-touch-icon" href="../../icons/apple-touch-icon.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Quicksand:wght@500&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&display=swap">
+<style>
+/* Layout: a night-time screening room. Footage hero, product wall, three big pillars, free report, then a working rep-portal example. One committed dark look: lighting reads best at night. */
+:root {
+  --bg: #0b111c; --band: #101827; --surface: #151e2f; --raise: #1c2740; --fg: #eaeef4; --muted: #9ba6b9;
+  --rule: #253049; --accent: #f2a648; --accent-ink: #1a1206; --good: #6fcf9b; --warn: #f2c94c;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; margin: 0; }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 1120px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.08; text-wrap: balance; }
+h1 { font-size: clamp(2.4rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -.025em; }
+h2 { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.02em; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.hl { color: var(--accent); }
+section.block { padding-block: 96px; display: block; }
+section.band { background: var(--band); border-block: 1px solid var(--rule); }
+.head { display: grid; gap: 14px; max-width: 780px; margin-bottom: 40px; }
+.head p { color: #c3cbd8; font-size: 1.15rem; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 .95rem var(--body); padding: 11px 18px; border-radius: 8px; border: 1px solid var(--rule); background: var(--raise); color: var(--fg); cursor: pointer; text-decoration: none; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.small { padding: 6px 12px; font-size: .85rem; }
+.btn:hover { filter: brightness(1.08); }
+.btn:focus-visible, button:focus-visible, .card:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.demo-tag { font-family: var(--mono); font-size: .72rem; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 7px; width: fit-content; }
+
+/* FlowConnect header */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* FlowConnect header: identical to the FlowConnect homepage's */
+.fch { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: #fff; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid #dfe6f0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font-family: "Inter", -apple-system, "Segoe UI", sans-serif; }
+.fch-in { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.fch-logo { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.fch-logo img { height: 30px; width: auto; display: block; }
+.fch-logo span { font: 500 1.75rem/1 "Quicksand", sans-serif; color: #2b7cf3; letter-spacing: -.01em; margin-top: 3px; }
+.fch-links { display: flex; gap: 26px; font-weight: 500; font-size: .93rem; }
+.fch-links a { color: #0d1a30; text-decoration: none; }
+.fch-links a:hover, .fch-links a[aria-current="page"] { color: #2b7cf3; }
+.fch-cta { display: flex; gap: 8px; }
+.fch-btn { display: inline-flex; align-items: center; justify-content: center; text-align: center; line-height: 1.2; font: 600 .95rem "Inter", sans-serif; padding: 10px 16px; border-radius: 10px; border: 1.5px solid #dfe6f0; background: #fff; color: #0d1a30; cursor: pointer; text-decoration: none; }
+.fch-btn.primary { background: #2b7cf3; border-color: #2b7cf3; color: #fff; }
+.fch-btn.primary:hover { background: #1c5fd0; border-color: #1c5fd0; }
+@media (max-width: 900px) { .fch-links, .fch-cta .report-open { display: none; } .fch-logo img { height: 24px; } .fch-logo span { font-size: 1.4rem; } }
+
+/* Get-a-demo modal, shared by every FlowConnect page */
+.dd { width: min(560px, calc(100vw - 24px)); border: 1px solid #dfe6f0; border-radius: 18px; padding: 0; color: #0d1a30; background: #fff; font-family: "Inter", -apple-system, "Segoe UI", sans-serif; }
+.dd::backdrop { background: rgba(13,26,48,.55); }
+.dd-in { padding: 26px; display: grid; gap: 12px; position: relative; }
+.dd h2 { font: 700 1.55rem/1.15 "Inter Tight", "Inter", sans-serif; letter-spacing: -.018em; margin: 0; color: #0d1a30; }
+.dd p { margin: 0; color: #56627a; font-size: .97rem; line-height: 1.5; }
+.dd form { display: grid; gap: 12px; margin: 0; }
+.dd label { display: grid; gap: 5px; font-size: .86rem; font-weight: 600; color: #56627a; }
+.dd input { font: inherit; font-size: 1rem; border: 1.5px solid #dfe6f0; border-radius: 10px; padding: 10px 12px; width: 100%; box-sizing: border-box; color: #0d1a30; background: #fff; }
+.dd .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.dd .dd-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.dd .dd-err { color: #c0362c; font-size: .88rem; }
+.dd .dd-go { font: 600 1rem "Inter", sans-serif; background: #2b7cf3; color: #fff; border: 0; border-radius: 10px; padding: 13px 20px; cursor: pointer; }
+.dd .dd-go:hover { background: #1c5fd0; }
+.dd .dd-x { position: absolute; top: 14px; right: 14px; border: 1.5px solid #dfe6f0; background: #fff; border-radius: 9px; padding: 5px 11px; font: 600 .86rem "Inter", sans-serif; cursor: pointer; color: #0d1a30; }
+.dd .dd-ok { background: #e8f1ff; color: #1c4fa8; border-radius: 12px; padding: 14px; font-size: .94rem; line-height: 1.5; }
+.dd .dd-ok a { color: #1c4fa8; font-weight: 700; }
+.dd [hidden] { display: none !important; }
+.dd input:focus-visible, .dd button:focus-visible { outline: 3px solid rgba(43,124,243,.35); outline-offset: 2px; }
+@media (max-width: 600px) { .dd .pair { grid-template-columns: minmax(0, 1fr); } }
+
+/* Trade switcher */
+.switcher { background: #070b13; border-bottom: 1px solid var(--rule); }
+.switcher .inner { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; padding-block: 8px; font-size: .86rem; }
+.switcher span { color: var(--muted); margin-right: 6px; }
+.switcher a { color: var(--fg); text-decoration: none; padding: 4px 12px; border-radius: 99px; border: 1px solid var(--rule); }
+.switcher a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+
+/* Hero */
+.hero { position: relative; min-height: min(88vh, 780px); display: grid; align-items: end; overflow: hidden; background: #000; }
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .6; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,17,28,.1) 0%, rgba(11,17,28,.35) 45%, rgba(11,17,28,.97) 100%); }
+.hero .wrap { position: relative; z-index: 1; padding-block: 140px 72px; }
+.hero .inner { display: grid; gap: 20px; }
+.hero p.lede { font-size: clamp(1.08rem, 1.9vw, 1.3rem); color: #d3d9e4; max-width: 680px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Product wall */
+.wall { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.card { position: relative; border-radius: 12px; overflow: hidden; background: var(--surface); border: 1px solid var(--rule); cursor: pointer; text-align: left; padding: 0; color: inherit; font: inherit; display: grid; }
+.card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; transition: transform .5s ease; }
+.card:hover img { transform: scale(1.03); }
+.card .meta { padding: 14px 16px 16px; display: grid; gap: 4px; }
+.card .brand { font-size: .8rem; color: var(--muted); }
+.card .play { position: absolute; top: 12px; right: 12px; background: rgba(11,17,28,.82); border-radius: 99px; padding: 5px 11px; font-size: .78rem; font-weight: 600; }
+.card .play b { color: var(--accent); }
+.card .open { color: var(--accent); font-size: .86rem; font-weight: 600; margin-top: 4px; }
+.styles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.styles span { background: var(--raise); border: 1px solid var(--rule); border-radius: 99px; padding: 5px 12px; font-size: .86rem; }
+
+/* Product dialog */
+dialog { width: min(1080px, calc(100vw - 24px)); max-height: calc(100vh - 24px); padding: 0; border: 1px solid var(--rule); border-radius: 14px; background: var(--band); color: var(--fg); }
+dialog::backdrop { background: rgba(3,6,12,.8); }
+.dlg { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); }
+.stage { background: var(--bg); display: grid; align-content: start; }
+.stage .view { aspect-ratio: 16 / 10; display: grid; place-items: center; background: #000; }
+.stage .view img, .stage .view video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.stage .view img.photo { object-fit: contain; background: #fff; padding: 18px; }
+.thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 8px; }
+.thumbs button { padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; background: var(--surface); cursor: pointer; display: grid; color: var(--muted); font: 500 .72rem var(--body); text-align: left; }
+.thumbs button[aria-pressed="true"] { border-color: var(--accent); color: var(--fg); }
+.thumbs img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+.thumbs img.photo { object-fit: contain; background: #fff; }
+.thumbs span { padding: 4px 6px; }
+.info { padding: 22px 22px 24px; display: grid; gap: 14px; align-content: start; overflow: auto; max-height: calc(100vh - 26px); min-width: 0; }
+.close { justify-self: end; margin: -6px -6px 0 0; }
+.chip { display: inline-block; font-family: var(--mono); font-size: .76rem; color: var(--accent); border: 1px solid var(--accent); border-radius: 99px; padding: 2px 10px; width: fit-content; }
+.specs { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.specs td { padding: 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.specs td:first-child { color: var(--muted); width: 42%; padding-right: 10px; }
+.specs .src { display: block; font-family: var(--mono); font-size: .72rem; color: var(--muted); margin-top: 2px; }
+.meter { display: grid; gap: 6px; }
+.meter .bar { height: 8px; border-radius: 4px; background: var(--rule); overflow: hidden; }
+.meter .bar span { display: block; height: 100%; background: var(--accent); }
+.meter .lbl { display: flex; justify-content: space-between; font-size: .82rem; color: var(--muted); }
+.meter .lbl b { color: var(--fg); }
+
+/* Pillars */
+.pillars { display: grid; gap: 0; }
+.pillar { display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1fr); gap: 32px; padding: 44px 0; border-top: 1px solid var(--rule); align-items: start; }
+.pillar .n { font-family: var(--display); font-weight: 800; font-size: 4.2rem; line-height: .85; color: var(--accent); }
+.pillar .txt { display: grid; gap: 14px; }
+.pillar h3 { font-family: var(--display); font-weight: 800; font-size: clamp(1.8rem, 3.4vw, 2.6rem); color: var(--accent); letter-spacing: -.015em; line-height: 1.05; }
+.pillar .lead { font-size: 1.08rem; color: #d3d9e4; }
+.pillar ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; color: #c3cbd8; }
+.pillar ul b { color: var(--fg); }
+.pillar .side { min-width: 0; display: grid; gap: 12px; }
+.result { margin-top: 8px; padding: 28px; border-radius: 14px; background: linear-gradient(120deg, rgba(242,166,72,.16), rgba(242,166,72,.04)); border: 1px solid rgba(242,166,72,.35); }
+.result p { font-family: var(--display); font-weight: 600; font-size: clamp(1.2rem, 2.2vw, 1.55rem); line-height: 1.3; }
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.shots figure { margin: 0; display: grid; gap: 4px; }
+.shots img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 6px; display: block; }
+.shots figcaption { font-size: .78rem; color: var(--muted); }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 16px; display: grid; gap: 10px; font-size: .9rem; }
+.panel code { font-family: var(--mono); font-size: .82rem; color: var(--accent); }
+.dedupe { display: grid; gap: 6px; font-family: var(--mono); font-size: .8rem; }
+.dedupe .bad { color: #e98b7f; text-decoration: line-through; }
+.dedupe .ok { color: var(--good); }
+.flowmap { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; text-align: center; font-size: .86rem; }
+.flowmap div { background: var(--raise); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 8px; display: grid; gap: 2px; }
+.flowmap div.mid { border-color: var(--accent); }
+.flowmap b { font-family: var(--display); }
+.flowmap span { color: var(--muted); font-size: .76rem; }
+.flowmap i { color: var(--accent); font-style: normal; font-weight: 700; }
+
+/* Free report */
+.report { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 44px; align-items: center; }
+.inside { margin: 0; padding-left: 1.3em; display: grid; gap: 9px; color: #cfd6e2; }
+.inside b { color: var(--fg); }
+.mock { display: grid; gap: 10px; justify-items: center; }
+.mock-page { width: min(100%, 420px); aspect-ratio: 8.5 / 11; background: #f7f8fb; color: #16202e; border-radius: 6px; padding: 26px 24px; display: grid; gap: 14px; align-content: start; box-shadow: 0 24px 60px rgba(0,0,0,.5); transform: rotate(-1.5deg); }
+.mock-tag { font: 600 .62rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #4b4fd6; background: #e9e9fb; border-radius: 99px; padding: 3px 9px; justify-self: end; }
+.mock-h { font: 800 1.35rem/1.1 var(--display); }
+.mock-h span { color: #4b6fe0; }
+.mock-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.mock-tiles div { background: #111a2b; color: #fff; border-radius: 8px; padding: 10px; display: grid; gap: 2px; }
+.mock-tiles b { font: 800 1.25rem var(--display); }
+.mock-tiles span { font-size: .62rem; line-height: 1.3; color: #c3cad8; }
+.mock-thumbs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.mock-thumbs img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; display: block; background: #dfe3ea; }
+.mock-lines { display: grid; gap: 6px; }
+.mock-lines i { display: block; height: 7px; border-radius: 4px; background: #dde1e8; }
+.rform { padding: 24px; display: grid; gap: 12px; }
+.rform form { display: grid; gap: 12px; }
+.rform label { display: grid; gap: 5px; font-size: .86rem; color: var(--muted); }
+.rform input, .rform textarea { font: inherit; background: var(--raise); color: var(--fg); border: 1px solid var(--rule); border-radius: 8px; padding: 9px 11px; width: 100%; resize: vertical; }
+.rform .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.rform pre { white-space: pre-wrap; background: var(--raise); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; font: .82rem/1.5 var(--mono); margin: 0; }
+.routed { background: var(--band); border: 1px solid var(--good); border-radius: 10px; padding: 12px; font-size: .9rem; display: grid; gap: 4px; }
+.routed b { color: var(--good); }
+.err { color: #f2867c; font-size: .88rem; }
+.addr { user-select: all; color: var(--fg); font-weight: 600; }
+#report-dlg { width: min(640px, calc(100vw - 24px)); }
+
+/* Portal */
+.needs { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 28px; }
+.needs div { border-top: 3px solid var(--accent); padding-top: 10px; display: grid; gap: 4px; }
+.needs b { font-family: var(--display); font-size: 1.1rem; }
+.needs span { color: var(--muted); font-size: .9rem; }
+.portal { border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; background: #f4f6fa; color: #172133; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+.p-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; background: #fff; border-bottom: 1px solid #dfe4ec; flex-wrap: wrap; }
+.p-logo { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; }
+.p-logo i { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #f2a648, #c96b10); display: inline-block; }
+.p-user { font-size: .82rem; color: #5b6678; }
+.p-body { display: grid; grid-template-columns: 190px minmax(0, 1fr); min-height: 520px; }
+.p-nav { background: #fff; border-right: 1px solid #dfe4ec; padding: 12px; display: grid; gap: 4px; align-content: start; }
+.p-nav button { text-align: left; font: 500 .92rem var(--body); color: #344055; background: none; border: 0; border-radius: 8px; padding: 9px 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.p-nav button[aria-pressed="true"] { background: #fff1e0; color: #8a4a06; font-weight: 600; }
+.p-nav .count { font-size: .75rem; background: #c96b10; color: #fff; border-radius: 99px; padding: 0 7px; }
+.p-main { padding: 18px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.p-main h4 { margin: 0; font: 700 1.15rem var(--display); }
+.p-search { display: flex; gap: 8px; flex-wrap: wrap; }
+.p-search input, .p-main select, .p-main input[type=number] { font: inherit; border: 1px solid #cfd6e2; border-radius: 8px; padding: 8px 10px; background: #fff; color: #172133; }
+.p-search input { flex: 1; min-width: 180px; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chips button { font: 500 .8rem var(--body); border: 1px solid #cfd6e2; background: #fff; border-radius: 99px; padding: 4px 11px; cursor: pointer; color: #344055; }
+.chips button[aria-pressed="true"] { background: #172133; color: #fff; border-color: #172133; }
+.ptable { width: 100%; border-collapse: collapse; font-size: .88rem; background: #fff; border-radius: 10px; overflow: hidden; }
+.ptable th { text-align: left; font: 600 .74rem var(--body); text-transform: uppercase; letter-spacing: .05em; color: #6a7487; padding: 9px 10px; border-bottom: 1px solid #e4e8ef; background: #f9fafc; }
+.ptable td { padding: 9px 10px; border-bottom: 1px solid #eef1f5; vertical-align: middle; }
+.ptable tr:last-child td { border-bottom: 0; }
+.ptable .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ptable img { width: 44px; height: 44px; object-fit: contain; border-radius: 6px; background: #fff; border: 1px solid #eef1f5; display: block; }
+.pname { font-weight: 600; }
+.psku { font-family: var(--mono); font-size: .76rem; color: #6a7487; }
+.pbtn { font: 600 .8rem var(--body); border: 1px solid #cfd6e2; background: #fff; border-radius: 7px; padding: 5px 10px; cursor: pointer; color: #172133; white-space: nowrap; }
+.pbtn.go { background: #172133; color: #fff; border-color: #172133; }
+.tablewrap { overflow-x: auto; border: 1px solid #e4e8ef; border-radius: 10px; }
+.pdetail { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; background: #fff; border: 1px solid #e4e8ef; border-radius: 10px; padding: 14px; }
+.pdetail img { width: 100%; aspect-ratio: 1; object-fit: contain; }
+.pdetail table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.pdetail td { padding: 5px 0; border-bottom: 1px solid #eef1f5; }
+.pdetail td:first-child { color: #6a7487; width: 45%; }
+.status { font: 600 .74rem var(--body); border-radius: 99px; padding: 2px 9px; white-space: nowrap; }
+.s-ship { background: #e3f4ea; color: #1d6b42; } .s-ack { background: #e7eefc; color: #2b4f9c; } .s-new { background: #fff1e0; color: #8a4a06; } .s-del { background: #eef1f5; color: #4a5568; }
+.qtot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; background: #fff; border: 1px solid #e4e8ef; border-radius: 10px; padding: 12px 14px; }
+.qtot b { font: 800 1.2rem var(--display); }
+.toast { background: #172133; color: #fff; border-radius: 10px; padding: 10px 14px; font-size: .88rem; }
+.pnote { font-size: .8rem; color: #6a7487; }
+.connects { margin-top: 28px; }
+
+/* Steps + CTA */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; }
+.steps div { border-top: 2px solid var(--accent); padding-top: 12px; display: grid; gap: 6px; }
+.steps span { font-family: var(--display); font-weight: 800; font-size: 1.6rem; color: var(--accent); line-height: 1; }
+.cta { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+.fine { font-size: .76rem; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .dlg { grid-template-columns: minmax(0, 1fr); }
+  .info { max-height: none; }
+  .pillar { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 32px 0; }
+  .pillar .n { font-size: 3rem; }
+  .report, .cta { grid-template-columns: minmax(0, 1fr); }
+  .rform .two { grid-template-columns: minmax(0, 1fr); }
+  .p-body { grid-template-columns: minmax(0, 1fr); }
+  .p-nav { grid-auto-flow: column; overflow-x: auto; border-right: 0; border-bottom: 1px solid #dfe4ec; }
+  .pdetail { grid-template-columns: minmax(0, 1fr); }
+  .pdetail img { max-width: 180px; }
+  .flowmap { grid-template-columns: minmax(0, 1fr); }
+  .flowmap i { transform: rotate(90deg); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card img { transition: none; } }
+</style>
+
+<nav class="fch" aria-label="FlowConnect"><div class="fch-in"><a class="fch-logo" href="../../" aria-label="FlowConnect home"><img src="media/flow_logo.png" alt="flow"><span>Connect</span></a><div class="fch-links"><a href="../../index.html#products">Products</a><a href="../../index.html#start">Getting started</a><a href="../../index.html#security">Security</a><a href="../../index.html#syndicate">Syndication</a><a href="#top" aria-current="page">Product Studio</a></div><div class="fch-cta"><button class="fch-btn report-open" type="button">Get my free report</button><button class="fch-btn primary demo-open" type="button">Get a demo</button></div></div></nav>
+<div class="switcher gut"><div class="inner"><span>See it for</span><a href="../lighting/">Lighting</a><a href="./" aria-current="page">Electrical</a><a href="../plumbing/">Plumbing</a><a href="../hvac/">HVAC</a><a href="../utility/">Utility</a></div></div>
+<header class="hero" id="top">
+  <video id="hero" src="media/hero.mp4" poster="media/hero_poster.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <div class="wrap gut">
+    <div class="inner">
+      <h1>Make your products the <span class="hl">easiest to sell</span> in the channel.</h1>
+      <p class="lede">We clean your product data, make your catalog look incredible, and put all of it, with pricing, in front of every rep and distributor who sells your line. So they quote you first.</p>
+      <div class="row"><button class="btn primary report-open" type="button">Get my free customized report</button><button class="btn" type="button" id="reel-open">▶ Watch the 1-minute reel</button><a class="btn" href="#portal">See the rep portal</a></div>
+    </div>
+  </div>
+</header>
+
+<section class="block gut" id="products">
+  <div class="inner">
+    <div class="head">
+      <h2>Your electrical products, <span class="hl">at work</span>.</h2>
+      <p>EV chargers lighting up, rooms dimming up at a tap, panels on a studio set, trays carrying a data center's cabling. Your products shown in the garages, homes, plants and data halls they're installed in. All of it made from the catalog photos you already have.</p>
+      <div class="styles"><span>Power-on video</span><span>Studio spin</span><span>Before and after</span><span>Residential</span><span>Commercial</span><span>Industrial</span><span>Data center</span></div>
+    </div>
+    <div class="wall" id="wall"></div>
+  </div>
+</section>
+
+<dialog id="dlg" aria-labelledby="d-name">
+  <div class="dlg">
+    <div class="stage">
+      <div class="view" id="d-view"></div>
+      <div class="thumbs" id="d-thumbs"></div>
+    </div>
+    <div class="info">
+      <button class="btn close" type="button" id="d-close">Close</button>
+      <span class="muted" id="d-brand"></span>
+      <h2 id="d-name" style="font-size:1.6rem"></h2>
+      <span class="chip" id="d-etim"></span>
+      <table class="specs" id="d-specs"></table>
+      <div class="meter" id="d-meter"></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="reel-dlg" aria-label="Demo reel" style="background:#000">
+  <div style="display:grid">
+    <button class="btn close" type="button" id="reel-close" style="margin:10px;justify-self:end">Close</button>
+    <video id="reel-v" src="media/reel.mp4" poster="media/poster.jpg" controls playsinline preload="none" style="width:100%;aspect-ratio:16/9;display:block;background:#000"></video>
+  </div>
+</dialog>
+
+<section class="block band gut" id="value">
+  <div class="inner">
+    <div class="head">
+      <h2>Everything your channel needs to <span class="hl">sell more of your products</span>.</h2>
+      <p>One package, three parts. Clean data your reps and distributors can quote. Footage that makes your products look their best. And a channel that has all of it.</p>
+    </div>
+    <div class="pillars">
+      <article class="pillar">
+        <span class="n">1</span>
+        <div class="txt">
+          <h3>We clean your data.</h3>
+          <p class="lead">One complete, correct record for every part you sell, built from what you already publish. No PIM or data team needed on your side.</p>
+          <ul>
+            <li><b>Every orderable part number</b>, with families and variants.</li>
+            <li><b>Duplicates merged</b> and conflicting values flagged for your team to confirm once.</li>
+            <li><b>Dimensions, weights, UPCs and pack quantities</b> filled from your spec sheets.</li>
+            <li><b>Classified to ETIM</b>, the industry standard, so your products show up when a buyer filters by IP65, 3000 K or 0–10 V.</li>
+            <li><b>Crosses that work.</b> Standard attributes let reps cross a competitor's part straight into yours.</li>
+            <li><b>Every value traceable</b> to the sentence on your spec sheet it came from.</li>
+          </ul>
+        </div>
+        <div class="side">
+          <div class="panel">
+            <span class="demo-tag">Example cleanup</span>
+            <div class="dedupe" id="dedupe"></div>
+          </div>
+          <div class="panel">
+            <span class="demo-tag" id="etim-tag">Example ETIM record</span>
+            <table class="specs" id="etim-ex"></table>
+          </div>
+        </div>
+      </article>
+      <article class="pillar">
+        <span class="n">2</span>
+        <div class="txt">
+          <h3>We make it look incredible.</h3>
+          <p class="lead">Your products shown installed and working, so a contractor, engineer or buyer can picture them on the job.</p>
+          <ul>
+            <li><b>Power-on videos</b>: the charger lighting up, the room dimming up, the moment it goes live.</li>
+            <li><b>Spinning studio shots</b> on a clean set.</li>
+            <li><b>Installed scenes</b>: the garage, the panel room, the factory floor, the data center.</li>
+            <li><b>Every environment</b>: residential, commercial, industrial and mission-critical.</li>
+            <li><b>Every angle</b>: eye level, overhead and close up.</li>
+            <li>You approve every image and video before it goes anywhere.</li>
+          </ul>
+        </div>
+        <div class="side shots" id="shots"></div>
+      </article>
+      <article class="pillar">
+        <span class="n">3</span>
+        <div class="txt">
+          <h3>We activate your channel.</h3>
+          <p class="lead">This is channel marketing. Your reps and distributors sell your products, so we put clean data, great footage and your pricing in their hands, wherever they work.</p>
+          <ul>
+            <li><b>Every authorized rep</b> gets your full catalog and pricing, free, with a Flow user.</li>
+            <li><b>Every authorized distributor</b> gets it free too, for their website, ERP and counter.</li>
+            <li><b>You decide who sees what</b>, partner by partner. Nothing goes out without your sign-off.</li>
+            <li><b>A rep and distributor portal</b> if you don't have one: pricing, specs, spec sheets, quoting and order tracking in one place.</li>
+            <li><b>Connected both ways</b>: to their systems, and to yours.</li>
+          </ul>
+        </div>
+        <div class="side">
+          <div class="flowmap">
+            <div><b>Your system</b><span>ERP, price files, orders</span></div><i>⇄</i>
+            <div class="mid"><b>Flow</b><span>Clean catalog, pricing, footage</span></div><i>⇄</i>
+            <div><b>Your channel</b><span>Every rep and distributor</span></div>
+          </div>
+          <a class="btn" href="#portal" style="width:fit-content">See the rep portal</a>
+        </div>
+      </article>
+    </div>
+    <div class="result"><p>The result: your products are the <span class="hl">easiest for your reps and distributors to quote</span>, and the <span class="hl">best-looking</span> to the people buying them.</p></div>
+  </div>
+</section>
+
+<section class="block gut" id="report">
+  <div class="inner report">
+    <div style="display:grid;gap:16px;align-content:start">
+      <h2>See what you'd get <span class="hl">before you buy</span>.</h2>
+      <p class="muted" style="font-size:1.1rem">We'll review your product data and build you a customized report, free. No cost, no commitment.</p>
+      <ol class="inside">
+        <li><b>Your numbers.</b> Part numbers listed twice with conflicting data, missing dimensions and weights, spec-sheet coverage, ETIM coverage.</li>
+        <li><b>What we'd fix first.</b> The opportunities that matter most for quoting, with real examples from your own site.</li>
+        <li><b>2–3 videos of your products.</b> Made from your catalog photos.</li>
+        <li><b>Sample ETIM records.</b> Three of your products fully classified.</li>
+        <li><b>Your plan.</b> What Flow does, and the short list your team approves.</li>
+      </ol>
+      <button class="btn primary report-open" type="button" style="width:fit-content">Get my customized report</button>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-page">
+        <span class="mock-tag">Product data insights</span>
+        <p class="mock-h">Insights on <span>your product data.</span></p>
+        <div class="mock-tiles">
+          <div><b>112</b><span>part numbers on more than one page, with differing data</span></div>
+          <div><b>31%</b><span>of parts without dimensions</span></div>
+          <div><b>18%</b><span>linked to a spec sheet</span></div>
+          <div><b>3</b><span>switch-on videos of your products</span></div>
+        </div>
+        <div class="mock-thumbs"><img id="mock-a" alt=""><img id="mock-b" alt=""><img id="mock-c" alt=""></div>
+        <div class="mock-lines"><i></i><i></i><i style="width:60%"></i></div>
+      </div>
+      <span class="demo-tag">Example report · figures are illustrative</span>
+    </div>
+  </div>
+</section>
+
+<dialog id="report-dlg" aria-labelledby="r-title">
+  <div class="rform">
+    <button class="btn close" type="button" id="r-close">Close</button>
+    <h2 id="r-title" style="font-size:1.6rem">Get your free customized report</h2>
+    <p class="muted">We'll build it from your public product data and include 2–3 videos of your own products.</p>
+    <form id="r-form" method="post" action="https://fcc-backend-q5cz.onrender.com/api/v1/public/flowconnect/lead" target="_blank" novalidate>
+      <input type="hidden" name="kind" value="report"><input type="hidden" name="page" value="Product Studio: Electrical">
+      <label class="hp" aria-hidden="true">Fax<input name="fax" tabindex="-1" autocomplete="off"></label>
+      <div class="two">
+        <label>Your name<input id="r-name" name="name" autocomplete="name" required></label>
+        <label>Company<input id="r-company" name="company" autocomplete="organization" required></label>
+      </div>
+      <div class="two">
+        <label>Work email<input id="r-email" name="email" type="email" autocomplete="email" required></label>
+        <label>Website<input id="r-site" name="website" placeholder="yourbrand.com" required></label>
+      </div>
+      <label>Products to feature (optional)<textarea id="r-skus" name="notes" rows="3" placeholder="Up to three part numbers or product page links"></textarea></label>
+      <p id="r-err" class="err" hidden></p>
+      <button class="btn primary" type="submit">Get my customized report</button>
+    </form>
+    <div id="r-done" hidden>
+      <div class="routed"><b>Sent. One last step</b><span>We opened a new tab where you can pick a time for your FlowConnect demo, and we'll start building your report.</span></div>
+      <div class="row"><a class="btn primary" href="https://tidycal.com/flow/flow-connect" target="_blank" rel="noopener">Tab didn't open? Book my demo →</a></div>
+    </div>
+  </div>
+</dialog>
+
+<section class="block band gut" id="portal">
+  <div class="inner">
+    <div class="head">
+      <h2>A portal your reps and distributors <span class="hl">actually want to use</span>.</h2>
+      <p>Don't have a rep portal? We'll build you one. Below is an example of what your reps and distributors would see when they log in: everything they need to quote your products fast and order from you without picking up the phone.</p>
+    </div>
+    <div class="needs">
+      <div><b>1 · Pricing</b><span>Their own price on every part.</span></div>
+      <div><b>2 · Products and specs</b><span>Your whole catalog, searchable.</span></div>
+      <div><b>3 · Spec sheets</b><span>The right sheet on every part.</span></div>
+      <div><b>4 · Quoting</b><span>Build and send a quote in minutes.</span></div>
+      <div><b>5 · Order tracking</b><span>Status and tracking on every PO.</span></div>
+    </div>
+
+    <div class="portal" id="pt">
+      <div class="p-top">
+        <span class="p-logo"><i></i><span>Tavenor Electrical (example) · Partner portal</span></span>
+        <span class="p-user">Signed in as <b>Jordan · Summit Lighting Reps</b> (example)</span>
+      </div>
+      <div class="p-body">
+        <nav class="p-nav" aria-label="Portal sections">
+          <button type="button" data-t="catalog" aria-pressed="true">Catalog &amp; pricing</button>
+          <button type="button" data-t="cross" aria-pressed="false">Cross a part</button>
+          <button type="button" data-t="quote" aria-pressed="false">Quote <span class="count" id="q-count">0</span></button>
+          <button type="button" data-t="orders" aria-pressed="false">Orders</button>
+        </nav>
+        <div class="p-main" id="p-main" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="pnote" style="color:var(--muted);margin-top:10px">Example portal: the brand, products, prices, rep agency and orders are made up for this demo. Nothing you do here is sent anywhere.</p>
+
+    <div class="connects">
+      <div class="flowmap">
+        <div><b>Your ERP</b><span>Prices, stock and orders flow in</span></div><i>⇄</i>
+        <div class="mid"><b>The portal</b><span>One place for your whole channel</span></div><i>⇄</i>
+        <div><b>Their systems</b><span>Reps' and distributors' quoting and ERP</span></div>
+      </div>
+      <p class="muted" style="margin-top:14px;max-width:760px">The portal is the glue between you and your channel: orders go into your system, status comes back out, and your reps and distributors work from the same current catalog and pricing in their own tools.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block gut">
+  <div class="inner">
+    <div class="head"><h2>How it works</h2></div>
+    <div class="steps">
+      <div><span>1</span><h3>Send us your website and files</h3><p class="muted">Price lists and catalogs in any format. No PIM needed.</p></div>
+      <div><span>2</span><h3>We build everything</h3><p class="muted">Clean catalog, ETIM, footage and your portal, with every value traceable.</p></div>
+      <div><span>3</span><h3>You approve</h3><p class="muted">A short list of values to confirm, and every image and video to sign off.</p></div>
+      <div><span>4</span><h3>Your channel goes live</h3><p class="muted">Every rep and distributor you approve gets it, free, and it stays current.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block band gut">
+  <div class="inner cta">
+    <div style="display:grid;gap:14px">
+      <h2>See your own products <span class="hl">first</span>.</h2>
+      <p class="muted" style="font-size:1.08rem">Your free report shows what we'd fix in your product data, with videos of your own products, before you buy anything.</p>
+      <button class="btn primary report-open" type="button" style="width:fit-content">Get my customized report</button>
+    </div>
+    <div style="display:grid;gap:10px">
+      <p style="font-family:var(--display);font-weight:600;font-size:1.2rem">Product Studio</p>
+      <p class="muted">Part of <a href="../../" style="color:var(--accent)">FlowConnect</a></p>
+      <p class="fine" id="fine">Tavenor Electrical is an example brand made up for this page, not a real company. Its products, specs, prices, photos, scenes and videos are AI-generated illustrations. For your products, scenes and videos are made from your own catalog photos and are impressions of the product in use. ETIM data © ETIM International, ODC-By 1.0.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+const P = [
+ {
+  "key": "evcharger",
+  "brand": "Tavenor Electrical",
+  "sku": "TVE-EV48",
+  "name": "Volta 48A Level 2 EV Charger",
+  "app": "Residential",
+  "etim": "EC002883 · Charging device for electric vehicles",
+  "filled": 34,
+  "defined": 69,
+  "setting": "Home garage",
+  "style": "Power-on video",
+  "tags": [],
+  "specs": [
+   [
+    "Max charging current",
+    "48 A",
+    "Up to 48A continuous output"
+   ],
+   [
+    "Input voltage",
+    "208–240 V AC",
+    "Input 208-240VAC, single phase"
+   ],
+   [
+    "Connector",
+    "J1772 (SAE)",
+    "SAE J1772 connector"
+   ],
+   [
+    "Cable length",
+    "25 ft",
+    "25 ft charging cable"
+   ],
+   [
+    "Enclosure rating",
+    "NEMA 3R",
+    "NEMA 3R enclosure, indoor/outdoor"
+   ]
+  ],
+  "photo": "media/evcharger_photo.jpg",
+  "on": "media/evcharger_on.jpg",
+  "off": "media/evcharger_off.jpg",
+  "video": "media/evcharger.mp4"
+ },
+ {
+  "key": "dimmer",
+  "brand": "Tavenor Electrical",
+  "sku": "TVE-SD600",
+  "name": "Glide Smart Paddle Dimmer",
+  "app": "Residential",
+  "etim": "EC000025 · Dimmer",
+  "filled": 22,
+  "defined": 48,
+  "setting": "Dining room at dusk",
+  "style": "Lights up on tap",
+  "tags": [],
+  "specs": [
+   [
+    "Load",
+    "600 W incandescent / 150 W LED",
+    "600W incandescent, 150W LED/CFL"
+   ],
+   [
+    "Control",
+    "Paddle with LED level indicator",
+    "Paddle with 7-level LED indicator"
+   ],
+   [
+    "Wiring",
+    "Single pole or 3-way",
+    "Single-pole or 3-way with companion"
+   ],
+   [
+    "Neutral",
+    "Required",
+    "Neutral wire required"
+   ],
+   [
+    "Color",
+    "White",
+    "White, screwless wall plate included"
+   ]
+  ],
+  "photo": "media/dimmer_photo.jpg",
+  "on": "media/dimmer_on.jpg",
+  "off": "media/dimmer_off.jpg",
+  "video": "media/dimmer.mp4"
+ },
+ {
+  "key": "panel",
+  "brand": "Tavenor Electrical",
+  "sku": "TVE-LC200",
+  "name": "Core 200A Main Breaker Load Center",
+  "app": "Residential",
+  "etim": "EC000214 · Small distribution board",
+  "filled": 18,
+  "defined": 30,
+  "setting": "Studio spin",
+  "style": "Studio spin",
+  "tags": [],
+  "specs": [
+   [
+    "Main breaker",
+    "200 A",
+    "200A main breaker"
+   ],
+   [
+    "Spaces / circuits",
+    "40 / 80",
+    "40 spaces, 80 circuits"
+   ],
+   [
+    "Voltage",
+    "120/240 V AC",
+    "120/240VAC single phase"
+   ],
+   [
+    "Enclosure",
+    "NEMA 1, indoor",
+    "NEMA 1 indoor enclosure"
+   ],
+   [
+    "Mounting",
+    "Surface or flush",
+    "Convertible surface or flush mount"
+   ]
+  ],
+  "photo": "media/panel_photo.jpg",
+  "on": "media/panel_on.jpg",
+  "off": "",
+  "video": "media/panel.mp4"
+ },
+ {
+  "key": "tray",
+  "brand": "Tavenor Electrical",
+  "sku": "TVE-WB124",
+  "name": "Grid 12 × 4 in Wire Basket Cable Tray",
+  "app": "Data center",
+  "etim": "EC000047 · Cable tray",
+  "filled": 21,
+  "defined": 37,
+  "setting": "Data center aisle",
+  "style": "Dolly down the aisle",
+  "tags": [],
+  "specs": [
+   [
+    "Width × depth",
+    "12 × 4 in",
+    "12 in wide x 4 in deep"
+   ],
+   [
+    "Length",
+    "10 ft",
+    "10 ft sections"
+   ],
+   [
+    "Material",
+    "Steel, electro-galvanized",
+    "Electro-galvanized carbon steel"
+   ],
+   [
+    "Wire diameter",
+    "5 mm",
+    "5mm welded wire"
+   ],
+   [
+    "Use",
+    "Low-voltage and data cabling",
+    "For low-voltage, data and fiber"
+   ]
+  ],
+  "photo": "media/tray_photo.jpg",
+  "on": "media/tray_on.jpg",
+  "off": "",
+  "video": "media/tray.mp4"
+ },
+ {
+  "key": "disconnect",
+  "brand": "Tavenor Electrical",
+  "sku": "TVE-SS60F",
+  "name": "Guardian 60A Fusible Safety Switch",
+  "app": "Industrial",
+  "etim": "EC000216 · Switch disconnector (AC)",
+  "filled": 24,
+  "defined": 42,
+  "setting": "Factory floor",
+  "style": "Push-in at work",
+  "tags": [],
+  "specs": [
+   [
+    "Rating",
+    "60 A, 600 V AC",
+    "60A, 600VAC"
+   ],
+   [
+    "Type",
+    "Fusible, heavy duty",
+    "Heavy-duty fusible"
+   ],
+   [
+    "Poles",
+    "3",
+    "3-pole"
+   ],
+   [
+    "Enclosure",
+    "NEMA 3R",
+    "NEMA 3R rainproof"
+   ],
+   [
+    "Lockout",
+    "Padlockable handle",
+    "Handle padlockable in OFF"
+   ]
+  ],
+  "photo": "media/disconnect_photo.jpg",
+  "on": "media/disconnect_on.jpg",
+  "off": "",
+  "video": "media/disconnect.mp4"
+ }
+];
+const CLEAN = {"dupes": ["TVE-EV48-01 · \"VOLTA 48A LEVEL 2 EV CHARGER\"", "TVE-EV48 · \"Volta 48A Level 2 EV Charger\"", "tve ev48 · \"Volta Charger\""], "one": "TVE-EV48 · Volta 48A Level 2 EV Charger · 1 record", "etimTag": "Example ETIM record · Volta", "etim": [["Class", "EC002883 · Charging device for electric vehicles", ""], ["Max charging current", "48 A", "Up to 48A continuous output"], ["Input voltage", "208–240 V AC", "Input 208-240VAC, single phase"], ["Connector", "J1772 (SAE)", "SAE J1772 connector"]], "shots": [["evcharger", "on", "Residential · Home garage"], ["evcharger", "off", "Before · same scene"], ["dimmer", "on", "Residential · Dining room at dusk"], ["panel", "on", "Residential · Studio spin"]]};
+const EX = [{"sku": "TVE-EV48", "name": "Volta 48A Level 2 EV Charger", "img": "media/ex_evcharger.jpg", "list": 699, "net": 489, "stock": 64, "app": "Residential", "specs": [["Class", "ETIM EC002883 · Charging device for electric vehicles"], ["Max charging current", "48 A"], ["Input voltage", "208–240 V AC"], ["Connector", "J1772 (SAE)"], ["Cable length", "25 ft"]]}, {"sku": "TVE-SD600", "name": "Glide Smart Paddle Dimmer", "img": "media/ex_dimmer.jpg", "list": 79, "net": 52, "stock": 240, "app": "Residential", "specs": [["Class", "ETIM EC000025 · Dimmer"], ["Load", "600 W incandescent / 150 W LED"], ["Control", "Paddle with LED level indicator"], ["Wiring", "Single pole or 3-way"], ["Neutral", "Required"]]}, {"sku": "TVE-LC200", "name": "Core 200A Main Breaker Load Center", "img": "media/ex_panel.jpg", "list": 389, "net": 272, "stock": 38, "app": "Residential", "specs": [["Class", "ETIM EC000214 · Small distribution board"], ["Main breaker", "200 A"], ["Spaces / circuits", "40 / 80"], ["Voltage", "120/240 V AC"], ["Enclosure", "NEMA 1, indoor"]]}, {"sku": "TVE-WB124", "name": "Grid 12 × 4 in Wire Basket Cable Tray", "img": "media/ex_tray.jpg", "list": 64, "net": 45, "stock": 820, "app": "Data center", "specs": [["Class", "ETIM EC000047 · Cable tray"], ["Width × depth", "12 × 4 in"], ["Length", "10 ft"], ["Material", "Steel, electro-galvanized"], ["Wire diameter", "5 mm"]]}, {"sku": "TVE-SS60F", "name": "Guardian 60A Fusible Safety Switch", "img": "media/ex_disconnect.jpg", "list": 412, "net": 288, "stock": 15, "app": "Industrial", "specs": [["Class", "ETIM EC000216 · Switch disconnector (AC)"], ["Rating", "60 A, 600 V AC"], ["Type", "Fusible, heavy duty"], ["Poles", "3"], ["Enclosure", "NEMA 3R"]]}];
+const CROSSES = [["48A Level 2 EV charger, J1772, 25 ft cable, NEMA 3R", "TVE-EV48"], ["Smart paddle dimmer, 150W LED, 3-way, white", "TVE-SD600"], ["200A main breaker load center, 40 space", "TVE-LC200"], ["60A 600V fusible safety switch, NEMA 3R", "TVE-SS60F"]];
+const ORDERS = [
+  { po: "PO-58812", who: "Northside Electric Supply", date: "Oct 28", lines: `24 × ${EX[2].sku}`, status: "Shipped", cls: "s-ship", track: "Tracking 1Z 84F 2W1 03 9921 4410" },
+  { po: "PO-58907", who: "Harbor Supply Co.", date: "Nov 3", lines: `60 × ${EX[1].sku}`, status: "Acknowledged", cls: "s-ack", track: "Ships Nov 12" },
+  { po: "PO-58931", who: "Northside Electric Supply", date: "Nov 5", lines: `12 × ${EX[0].sku}`, status: "Entered", cls: "s-new", track: "Awaiting acknowledgement" },
+  { po: "PO-58440", who: "Valley Supply Co.", date: "Oct 9", lines: `8 × ${EX[3].sku}`, status: "Delivered", cls: "s-del", track: "Delivered Oct 16" },
+];
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const money = n => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// Product wall + dialog.
+$("wall").innerHTML = P.map(p => `
+  <button class="card" type="button" data-k="${p.key}" aria-label="Open ${esc(p.name)}">
+    <img src="${p.on}" alt="${esc(p.name)} in a ${esc(p.setting.toLowerCase())}" loading="lazy">
+    <span class="play">▶ <b>Video</b> · ${esc(p.setting)}</span>
+    <span class="meta"><span class="brand">${esc(p.brand)} (example brand) · ${esc(p.sku)}</span><h3>${esc(p.name)}</h3>
+      <span class="open">Watch the footage, see the specs →</span></span>
+  </button>`).join("");
+$("wall").addEventListener("click", e => { const b = e.target.closest(".card"); if (b) openProduct(b.dataset.k); });
+function openProduct(key) {
+  const p = P.find(x => x.key === key);
+  const views = [["video", "Video"], ["on", p.style === "Studio spin" ? "Studio shot" : "Scene"], ...(p.off ? [["off", "Before"]] : []), ["photo", "Catalog photo"]];
+  $("d-thumbs").innerHTML = views.map(([v, label]) => `<button type="button" data-v="${v}" aria-pressed="false"><img src="${v === "video" ? p.on : p[v]}" alt="" class="${v === "photo" ? "photo" : ""}"><span>${v === "video" ? "▶ " : ""}${label}</span></button>`).join("");
+  $("d-thumbs").onclick = e => { const b = e.target.closest("button"); if (b) show(p, b.dataset.v); };
+  $("d-brand").textContent = `${p.brand} · ${p.sku}`;
+  $("d-name").textContent = p.name;
+  $("d-etim").textContent = `ETIM ${p.etim}`;
+  $("d-specs").innerHTML = p.specs.map(([k, v, s]) => `<tr><td>${esc(k)}</td><td>${esc(v)}<span class="src">"${esc(s)}"</span></td></tr>`).join("");
+  const pct = Math.round(100 * p.filled / p.defined);
+  $("d-meter").innerHTML = `<div class="lbl"><span>ETIM features filled (example)</span><b>${p.filled} of ${p.defined}</b></div><div class="bar"><span style="width:${Math.max(pct, 3)}%"></span></div>
+    <p class="muted" style="font-size:.8rem">Example data. For your products, each value is quoted from your own spec sheet.</p>`;
+  show(p, "video");
+  if (!$("dlg").open) $("dlg").showModal();
+}
+function show(p, v) {
+  $("d-view").innerHTML = v === "video" ? `<video src="${p.video}" autoplay muted loop playsinline controls></video>`
+    : `<img src="${p[v]}" alt="${esc(p.name)}" class="${v === "photo" ? "photo" : ""}">`;
+  [...$("d-thumbs").children].forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === v)));
+}
+$("d-close").onclick = () => $("dlg").close();
+$("dlg").addEventListener("click", e => { if (e.target === $("dlg")) $("dlg").close(); });
+$("dlg").addEventListener("close", () => { $("d-view").innerHTML = ""; });
+
+// Reel.
+$("reel-open").addEventListener("click", () => { $("reel-dlg").showModal(); const v = $("reel-v"); v.currentTime = 0; v.play().catch(() => {}); });
+$("reel-close").onclick = () => $("reel-dlg").close();
+$("reel-dlg").addEventListener("close", () => $("reel-v").pause());
+$("reel-dlg").addEventListener("click", e => { if (e.target === $("reel-dlg")) $("reel-dlg").close(); });
+
+// Pillar examples.
+$("dedupe").innerHTML = CLEAN.dupes.map(d => `<span class="bad">${esc(d)}</span>`).join("") + `<span class="ok">→ ${esc(CLEAN.one)}</span>`;
+$("etim-tag").textContent = CLEAN.etimTag;
+$("etim-ex").innerHTML = CLEAN.etim.map(([k, v, s]) => `<tr><td>${esc(k)}</td><td>${esc(v)}${s ? `<span class="src">"${esc(s)}"</span>` : ""}</td></tr>`).join("");
+$("shots").innerHTML = CLEAN.shots.map(([k, v, c]) => { const p = P.find(x => x.key === k);
+  return `<figure><img src="${p[v]}" alt="${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`; }).join("");
+["mock-a", "mock-b", "mock-c"].forEach((id, i) => { $(id).src = P[[0, 2, 4][i]].on; });
+
+// Free report.
+document.querySelectorAll(".report-open").forEach(b => b.addEventListener("click", () => {
+  $("r-form").hidden = false; $("r-done").hidden = true; $("r-err").hidden = true; $("report-dlg").showModal(); $("r-name").focus();
+}));
+$("r-close").onclick = () => $("report-dlg").close();
+$("report-dlg").addEventListener("click", e => { if (e.target === $("report-dlg")) $("report-dlg").close(); });
+$("r-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const v = id => $(id).value.trim();
+  const missing = [["r-name", "your name"], ["r-company", "your company"], ["r-email", "your work email"], ["r-site", "your website"]].filter(([id]) => !v(id)).map(([, n]) => n);
+  if (missing.length) { $("r-err").textContent = `Add ${missing.join(", ")} so we know whose catalog to review.`; $("r-err").hidden = false; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("r-email"))) { $("r-err").textContent = "That email address doesn't look complete. Check it and try again."; $("r-err").hidden = false; return; }
+  // Valid: send it for real. It opens in a new tab, which emails us and lands on the demo calendar.
+  e.target.submit();
+  setTimeout(() => { $("r-form").hidden = true; $("r-done").hidden = false; }, 60);
+});
+
+// Portal demo.
+const quote = new Map();
+let tab = "catalog", query = "", appFilter = "", openSku = "", toast = "";
+function setTab(t) { tab = t; toast = ""; document.querySelectorAll(".p-nav button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.t === t))); render(); }
+document.querySelector(".p-nav").addEventListener("click", e => { const b = e.target.closest("button[data-t]"); if (b) setTab(b.dataset.t); });
+function addToQuote(sku) { quote.set(sku, (quote.get(sku) || 0) + 1); $("q-count").textContent = [...quote.values()].reduce((a, b) => a + b, 0); toast = `Added ${sku} to your quote.`; render(); }
+function render() {
+  const m = $("p-main");
+  if (tab === "catalog") {
+    const rows = EX.filter(p => (!appFilter || p.app === appFilter) && (!query || (p.name + " " + p.sku).toLowerCase().includes(query.toLowerCase())));
+    const d = EX.find(p => p.sku === openSku);
+    m.innerHTML = `<h4>Catalog &amp; your pricing</h4>
+      <div class="p-search"><input id="p-q" placeholder="Search part number or description" value="${esc(query)}" aria-label="Search the catalog"></div>
+      <div class="chips">${["", ...new Set(EX.map(p => p.app))].map(a => `<button type="button" data-a="${a}" aria-pressed="${a === appFilter}">${a || "All"}</button>`).join("")}</div>
+      ${toast ? `<div class="toast">${esc(toast)}</div>` : ""}
+      ${d ? `<div class="pdetail"><img src="${d.img}" alt="">
+        <div style="display:grid;gap:8px;align-content:start"><div><div class="pname">${esc(d.name)}</div><div class="psku">${d.sku}</div></div>
+          <table>${d.specs.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}<tr><td>Your price</td><td><b>${money(d.net)}</b> <span class="pnote">list ${money(d.list)}</span></td></tr><tr><td>Stock</td><td>${d.stock ? d.stock + " in stock" : "Made to order, 3 weeks"}</td></tr></table>
+          <div class="row"><button class="pbtn" type="button" data-sheet="${d.sku}">Spec sheet (PDF)</button><button class="pbtn go" type="button" data-add="${d.sku}">Add to quote</button><button class="pbtn" type="button" data-close="1">Back to list</button></div></div></div>` : ""}
+      <div class="tablewrap"><table class="ptable"><thead><tr><th></th><th>Product</th><th class="num">List</th><th class="num">Your price</th><th>Stock</th><th></th></tr></thead><tbody>
+      ${rows.map(p => `<tr><td><img src="${p.img}" alt=""></td><td><div class="pname">${esc(p.name)}</div><div class="psku">${p.sku}</div></td>
+        <td class="num">${money(p.list)}</td><td class="num"><b>${money(p.net)}</b></td><td>${p.stock ? p.stock : "To order"}</td>
+        <td><div class="row" style="gap:6px;flex-wrap:nowrap"><button class="pbtn" type="button" data-open="${p.sku}">Specs</button><button class="pbtn go" type="button" data-add="${p.sku}">Quote</button></div></td></tr>`).join("") || `<tr><td colspan="6">No products match. Clear the search.</td></tr>`}
+      </tbody></table></div>`;
+    $("p-q").addEventListener("input", e => { query = e.target.value; const pos = e.target.selectionStart; render(); const q = $("p-q"); q.focus(); q.setSelectionRange(pos, pos); });
+  } else if (tab === "cross") {
+    m.innerHTML = `<h4>Cross a competitor's part into yours</h4>
+      <p class="pnote">Paste what the contractor asked for. The portal matches it on ETIM attributes to your equivalent part.</p>
+      <div class="chips" style="display:grid;gap:8px">${CROSSES.map(([q], i) => `<button type="button" data-x="${i}" style="text-align:left;border-radius:8px;padding:8px 12px">${esc(q)}</button>`).join("")}</div>
+      <div id="x-out"></div>`;
+  } else if (tab === "quote") {
+    const lines = [...quote.entries()].map(([sku, qty]) => ({ ...EX.find(p => p.sku === sku), qty }));
+    const total = lines.reduce((s, l) => s + l.qty * l.net, 0);
+    m.innerHTML = `<h4>Quote Q-2041 · Riverside Medical Office (example job)</h4>
+      ${toast ? `<div class="toast">${esc(toast)}</div>` : ""}
+      ${lines.length ? `<div class="tablewrap"><table class="ptable"><thead><tr><th>Product</th><th class="num">Qty</th><th class="num">Your price</th><th class="num">Extended</th></tr></thead><tbody>
+        ${lines.map(l => `<tr><td><div class="pname">${esc(l.name)}</div><div class="psku">${l.sku}</div></td>
+          <td class="num"><input type="number" min="0" value="${l.qty}" data-qty="${l.sku}" aria-label="Quantity for ${l.sku}" style="width:72px;text-align:right"></td>
+          <td class="num">${money(l.net)}</td><td class="num">${money(l.qty * l.net)}</td></tr>`).join("")}
+        </tbody></table></div>
+        <div class="qtot"><span>Total <b>${money(total)}</b></span><div class="row"><button class="pbtn" type="button" data-sendq="1">Send quote to customer</button><button class="pbtn go" type="button" data-order="1">Place order with distributor</button></div></div>`
+      : `<p class="pnote">Your quote is empty. Add products from the catalog or a cross.</p><button class="pbtn go" type="button" data-goto="catalog" style="width:fit-content">Open the catalog</button>`}`;
+  } else {
+    m.innerHTML = `<h4>Orders</h4>
+      <div class="tablewrap"><table class="ptable"><thead><tr><th>PO</th><th>Distributor</th><th>Placed</th><th>Lines</th><th>Status</th><th>Tracking</th></tr></thead><tbody>
+      ${ORDERS.map(o => `<tr><td class="psku" style="color:#172133;font-weight:600">${o.po}</td><td>${esc(o.who)}</td><td>${o.date}</td><td>${esc(o.lines)}</td><td><span class="status ${o.cls}">${o.status}</span></td><td class="pnote">${esc(o.track)}</td></tr>`).join("")}
+      </tbody></table></div>
+      <p class="pnote">Status comes straight from your system, so reps and distributors stop calling to ask where an order is.</p>`;
+  }
+}
+$("p-main").addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) return;
+  if (t.dataset.a !== undefined) { appFilter = t.dataset.a; toast = ""; render(); }
+  else if (t.dataset.open) { openSku = t.dataset.open; toast = ""; render(); }
+  else if (t.dataset.close) { openSku = ""; render(); }
+  else if (t.dataset.add) addToQuote(t.dataset.add);
+  else if (t.dataset.sheet) { toast = `In your portal, the spec sheet for ${t.dataset.sheet} opens here.`; render(); }
+  else if (t.dataset.goto) setTab(t.dataset.goto);
+  else if (t.dataset.x !== undefined) {
+    const [q, sku] = CROSSES[+t.dataset.x]; const p = EX.find(x => x.sku === sku);
+    $("x-out").innerHTML = `<div class="pdetail"><img src="${p.img}" alt=""><div style="display:grid;gap:8px;align-content:start">
+      <span class="pnote">Best match for "${esc(q)}"</span><div><div class="pname">${esc(p.name)}</div><div class="psku">${p.sku}</div></div>
+      <table>${p.specs.slice(0, 4).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}<tr><td>Your price</td><td><b>${money(p.net)}</b></td></tr></table>
+      <button class="pbtn go" type="button" data-add="${p.sku}" style="width:fit-content">Add to quote</button></div></div>`;
+  }
+  else if (t.dataset.sendq) { toast = "Quote Q-2041 sent to the customer as a PDF, with spec sheets attached."; render(); }
+  else if (t.dataset.order) { toast = "Order sent to Northside Electric Supply and into your system. Track it under Orders."; render(); }
+});
+$("p-main").addEventListener("change", e => {
+  const i = e.target.closest("input[data-qty]"); if (!i) return;
+  const n = Math.max(0, parseInt(i.value, 10) || 0);
+  if (n) quote.set(i.dataset.qty, n); else quote.delete(i.dataset.qty);
+  $("q-count").textContent = [...quote.values()].reduce((a, b) => a + b, 0); toast = ""; render();
+});
+addToQuote(EX[2].sku); addToQuote(EX[2].sku); toast = ""; render();
+</script>
+
+<dialog id="demo-dlg" class="dd" aria-labelledby="dd-t">
+  <div class="dd-in">
+    <button type="button" class="dd-x" id="dd-x">Close</button>
+    <h2 id="dd-t">Book your FlowConnect demo</h2>
+    <p>About 20 minutes, shown with your own products. Tell us who you are, then pick a time that works.</p>
+    <form id="dd-form" method="post" action="https://fcc-backend-q5cz.onrender.com/api/v1/public/flowconnect/lead" target="_blank" novalidate>
+      <input type="hidden" name="kind" value="demo"><input type="hidden" name="page" value="Product Studio: Electrical">
+      <label class="dd-hp" aria-hidden="true">Fax<input name="fax" tabindex="-1" autocomplete="off"></label>
+      <div class="pair"><label>Your name<input id="dd-name" name="name" autocomplete="name"></label><label>Company<input id="dd-co" name="company" autocomplete="organization"></label></div>
+      <div class="pair"><label>Work email<input id="dd-email" name="email" type="email" autocomplete="email"></label><label>Website (optional)<input name="website" placeholder="yourbrand.com"></label></div>
+      <p class="dd-err" id="dd-err" hidden></p>
+      <button class="dd-go" type="submit">Pick a time →</button>
+    </form>
+    <div class="dd-ok" id="dd-ok" hidden><b>Thanks.</b> We opened the calendar in a new tab so you can pick a time. <a href="https://tidycal.com/flow/flow-connect" target="_blank" rel="noopener">Didn't open? Pick a time here.</a></div>
+  </div>
+</dialog>
+<script>
+(function () {
+  const d = document.getElementById("demo-dlg"), f = document.getElementById("dd-form");
+  const open = () => { f.hidden = false; document.getElementById("dd-ok").hidden = true; document.getElementById("dd-err").hidden = true; d.showModal(); document.getElementById("dd-name").focus(); };
+  document.querySelectorAll(".demo-open").forEach(b => b.addEventListener("click", e => { e.preventDefault(); open(); }));
+  document.getElementById("dd-x").onclick = () => d.close();
+  d.addEventListener("click", e => { if (e.target === d) d.close(); });
+  f.addEventListener("submit", e => {
+    e.preventDefault();
+    const v = id => document.getElementById(id).value.trim(), err = document.getElementById("dd-err");
+    const miss = [["dd-name", "your name"], ["dd-co", "your company"], ["dd-email", "your work email"]].filter(([i]) => !v(i)).map(([, n]) => n);
+    if (miss.length) { err.textContent = `Add ${miss.join(", ")} so we know who to meet.`; err.hidden = false; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("dd-email"))) { err.textContent = "That email address doesn't look complete."; err.hidden = false; return; }
+    f.submit();
+    setTimeout(() => { f.hidden = true; document.getElementById("dd-ok").hidden = false; }, 60);
+  });
+})();
+</script>
+
+
+</body></html>
