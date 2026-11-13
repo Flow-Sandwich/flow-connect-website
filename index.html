@@ -272,7 +272,7 @@ dialog::backdrop { background: rgba(13,26,48,.55); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .pulse { animation: none; } .ev { animation: none; } }
 
 /* Get-a-demo modal, shared by every FlowConnect page */
-.dd { width: min(560px, calc(100vw - 24px)); border: 1px solid #dfe6f0; border-radius: 18px; padding: 0; color: #0d1a30; background: #fff; font-family: "Inter", -apple-system, "Segoe UI", sans-serif; }
+.dd { width: min(960px, calc(100vw - 24px)); max-height: calc(100vh - 24px); border: 1px solid #dfe6f0; border-radius: 18px; padding: 0; color: #0d1a30; background: #fff; font-family: "Inter", -apple-system, "Segoe UI", sans-serif; }
 .dd::backdrop { background: rgba(13,26,48,.55); }
 .dd-in { padding: 26px; display: grid; gap: 12px; position: relative; }
 .dd h2 { font: 700 1.55rem/1.15 "Inter Tight", "Inter", sans-serif; letter-spacing: -.018em; margin: 0; color: #0d1a30; }
@@ -289,6 +289,9 @@ dialog::backdrop { background: rgba(13,26,48,.55); }
 .dd .dd-ok { background: #e8f1ff; color: #1c4fa8; border-radius: 12px; padding: 14px; font-size: .94rem; line-height: 1.5; }
 .dd .dd-ok a { color: #1c4fa8; font-weight: 700; }
 .dd [hidden] { display: none !important; }
+.dd .dd-cal { min-height: 560px; border-top: 1px solid #dfe6f0; margin: 4px -26px 0; padding: 8px 14px 0; }
+.dd .dd-alt { font-size: .86rem; }
+.dd .dd-alt a { color: #2b7cf3; font-weight: 600; }
 .dd input:focus-visible, .dd button:focus-visible { outline: 3px solid rgba(43,124,243,.35); outline-offset: 2px; }
 @media (max-width: 600px) { .dd .pair { grid-template-columns: minmax(0, 1fr); } }
 </style>
@@ -673,11 +676,12 @@ dialog::backdrop { background: rgba(13,26,48,.55); }
     <button class="btn" type="button" id="rclose" style="justify-self:end;padding:7px 12px">Close</button>
     <h2 id="rt" style="font-size:1.6rem">Get your free channel report</h2>
     <p class="muted" id="rsub">Built only from your public product data, with 2–3 videos of your own products.</p>
-    <form id="rf" method="post" action="https://fcc-backend-q5cz.onrender.com/api/v1/public/flowconnect/lead" target="_blank" novalidate>
+    <style>.biz{font-weight:400;opacity:.65;font-size:.9em}</style>
+<form id="rf" method="post" action="https://fcc-backend-q5cz.onrender.com/api/v1/public/flowconnect/lead" target="_blank" novalidate>
       <input type="hidden" name="kind" id="f-kind" value="report"><input type="hidden" name="page" value="FlowConnect homepage">
       <label class="hp" aria-hidden="true">Fax<input name="fax" tabindex="-1" autocomplete="off"></label>
       <div class="pair"><label>Your name<input id="f-name" name="name" autocomplete="name"></label><label>Company<input id="f-co" name="company" autocomplete="organization"></label></div>
-      <div class="pair"><label>Work email<input id="f-email" name="email" type="email" autocomplete="email"></label><label>Website<input id="f-site" name="website" placeholder="yourbrand.com"></label></div>
+      <label><span>Email <span class="biz">· business emails only</span></span><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@yourcompany.com"></label>
       <p class="err" id="ferr" hidden></p>
       <button class="btn primary" type="submit" id="fbtn">Get my free channel report</button>
     </form>
@@ -781,10 +785,11 @@ d.addEventListener("click", e => { if (e.target === d) d.close(); });
 document.getElementById("rf").addEventListener("submit", e => {
   e.preventDefault();
   const v = id => document.getElementById(id).value.trim();
-  const miss = [["f-name", "your name"], ["f-co", "your company"], ["f-email", "your work email"], ["f-site", "your website"]].filter(([i]) => !v(i)).map(([, n]) => n);
+  const miss = [["f-name", "your name"], ["f-co", "your company"], ["f-email", "your business email"]].filter(([i]) => !v(i)).map(([, n]) => n);
   const err = document.getElementById("ferr");
   if (miss.length) { err.textContent = `Add ${miss.join(", ")} so we know who to send it to.`; err.hidden = false; return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("f-email"))) { err.textContent = "That email address doesn't look complete."; err.hidden = false; return; }
+  if (/@(?:gmail|googlemail|yahoo|ymail|rocketmail|hotmail|outlook|live|msn|aol|icloud|me|mac|proton|protonmail|pm|gmx|mail|zoho|yandex|comcast|att|sbcglobal|verizon|cox|charter|earthlink|bellsouth)\./i.test(v("f-email"))) { err.textContent = "Please use your business email. Personal addresses like Gmail or Yahoo aren't accepted."; err.hidden = false; return; }
   // Valid: send the form for real. It opens in a new tab, which emails us and lands on the demo calendar.
   const kind = document.getElementById("f-kind").value;
   document.getElementById("fok-s").textContent = kind === "soc2"
@@ -799,34 +804,23 @@ document.getElementById("rf").addEventListener("submit", e => {
   <div class="dd-in">
     <button type="button" class="dd-x" id="dd-x">Close</button>
     <h2 id="dd-t">Book your FlowConnect demo</h2>
-    <p>About 20 minutes, shown with your own products. Tell us who you are, then pick a time that works.</p>
-    <form id="dd-form" method="post" action="https://fcc-backend-q5cz.onrender.com/api/v1/public/flowconnect/lead" target="_blank" novalidate>
-      <input type="hidden" name="kind" value="demo"><input type="hidden" name="page" value="FlowConnect homepage">
-      <label class="dd-hp" aria-hidden="true">Fax<input name="fax" tabindex="-1" autocomplete="off"></label>
-      <div class="pair"><label>Your name<input id="dd-name" name="name" autocomplete="name"></label><label>Company<input id="dd-co" name="company" autocomplete="organization"></label></div>
-      <div class="pair"><label>Work email<input id="dd-email" name="email" type="email" autocomplete="email"></label><label>Website (optional)<input name="website" placeholder="yourbrand.com"></label></div>
-      <p class="dd-err" id="dd-err" hidden></p>
-      <button class="dd-go" type="submit">Pick a time →</button>
-    </form>
-    <div class="dd-ok" id="dd-ok" hidden><b>Thanks.</b> We opened the calendar in a new tab so you can pick a time. <a href="https://tidycal.com/flow/flow-connect" target="_blank" rel="noopener">Didn't open? Pick a time here.</a></div>
+    <p>Pick a time that works. About 30 minutes, shown with your own products.</p>
+    <div class="dd-cal"><div class="tidycal-embed" data-path="flow/flow-connect"></div></div>
+    <p class="dd-alt">Calendar not loading? <a href="https://tidycal.com/flow/flow-connect" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
   </div>
 </dialog>
 <script>
 (function () {
-  const d = document.getElementById("demo-dlg"), f = document.getElementById("dd-form");
-  const open = () => { f.hidden = false; document.getElementById("dd-ok").hidden = true; document.getElementById("dd-err").hidden = true; d.showModal(); document.getElementById("dd-name").focus(); };
+  const d = document.getElementById("demo-dlg");
+  let loaded = false;
+  // Load TidyCal's embed the first time someone asks for it, not on every page view.
+  const open = () => {
+    if (!loaded) { loaded = true; const s = document.createElement("script"); s.src = "https://asset-tidycal.b-cdn.net/js/embed.js"; s.async = true; document.body.appendChild(s); }
+    d.showModal();
+  };
   document.querySelectorAll(".demo-open").forEach(b => b.addEventListener("click", e => { e.preventDefault(); open(); }));
   document.getElementById("dd-x").onclick = () => d.close();
   d.addEventListener("click", e => { if (e.target === d) d.close(); });
-  f.addEventListener("submit", e => {
-    e.preventDefault();
-    const v = id => document.getElementById(id).value.trim(), err = document.getElementById("dd-err");
-    const miss = [["dd-name", "your name"], ["dd-co", "your company"], ["dd-email", "your work email"]].filter(([i]) => !v(i)).map(([, n]) => n);
-    if (miss.length) { err.textContent = `Add ${miss.join(", ")} so we know who to meet.`; err.hidden = false; return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("dd-email"))) { err.textContent = "That email address doesn't look complete."; err.hidden = false; return; }
-    f.submit();
-    setTimeout(() => { f.hidden = true; document.getElementById("dd-ok").hidden = false; }, 60);
-  });
 })();
 </script>
 
